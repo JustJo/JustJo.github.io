@@ -86,6 +86,7 @@ ul#navigation li a {
 
 .wrapper {
 	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 
@@ -176,7 +177,7 @@ li {
 		text-align: right !important;
 	}
 	.wrapper {
-		padding: 0;
+		padding: 0 0 50px 0;
 	}
 	ul#navigation {
 		padding-top: 20px;
