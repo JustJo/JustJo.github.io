@@ -139,10 +139,15 @@ p.problem-highlight {
 strong {
 	font-weight: 600;}
 }
-ol, ul {
+ol {
   margin: 0;
   padding: 0 0 20px 20px;
 }
+ul {
+  margin: 0;
+  padding: 0 0 20px 20px;
+}
+
 li {
   font-size: 20px;
 	font-weight: 300;
