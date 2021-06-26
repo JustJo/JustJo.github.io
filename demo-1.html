@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    button {height: 50px; width: 50px; margin: 5px}
+    .active {background: #4287f5; color: #fff;}
+    .display {width: 100px; height: 50px; margin: 5px; font-size: 20px; border: 1px solid #aaa}
+  </style>
+  <script>
+  $(function(){
+    // set value to 0 at first
+    $('#display-hour').val();
+    $('#display-minute').val();
+
+    $(document).on('click', 'button.hour', function(){
+        $('#display-hour').val($(this).val());
+        $('button.hour').removeClass("active");
+        $(this).addClass("active");
+    });
+    $(document).on('click', 'button.minute', function(){
+        $('#display-minute').val($(this).val());
+        $('button.minute').removeClass("active");
+        $(this).addClass("active");
+    });
+});
+</script>
+</head>
+
+<body>
+
+<input type="text" class="display" id="display-hour" readonly />:<input type="text" class="display" id="display-minute" readonly />
+
+<div>
+  <h2>Hour</h2>
+  <button value="00" type="button" class="hour">00</button>
+  <button value="01" type="button" class="hour">01</button>
+  <button value="02" type="button" class="hour">02</button>
+  <button value="03" type="button" class="hour">03</button>
+  <button value="04" type="button" class="hour">04</button>
+  <button value="05" type="button" class="hour">05</button>
+  <button value="06" type="button" class="hour">06</button>
+  <button value="07" type="button" class="hour">07</button>
+  <button value="08" type="button" class="hour">08</button>
+  <button value="09" type="button" class="hour">09</button>
+  <button value="10" type="button" class="hour">10</button>
+  <button value="11" type="button" class="hour">11</button>
+  <button value="12" type="button" class="hour">12</button>
+  <button value="13" type="button" class="hour">13</button>
+  <button value="14" type="button" class="hour">14</button>
+  <button value="15" type="button" class="hour">15</button>
+  <button value="16" type="button" class="hour">16</button>
+  <button value="17" type="button" class="hour">17</button>
+  <button value="18" type="button" class="hour">18</button>
+  <button value="19" type="button" class="hour">19</button>
+  <button value="20" type="button" class="hour">20</button>
+  <button value="21" type="button" class="hour">21</button>
+  <button value="22" type="button" class="hour">22</button>
+  <button value="23" type="button" class="hour">23</button>
+
+  <h2>Minute</h2>
+  <button value="00" type="button" class="minute">00</button>
+  <button value="05" type="button" class="minute">05</button>
+  <button value="10" type="button" class="minute">10</button>
+  <button value="15" type="button" class="minute">15</button>
+  <button value="20" type="button" class="minute">20</button>
+  <button value="25" type="button" class="minute">25</button>
+  <button value="30" type="button" class="minute">30</button>
+  <button value="35" type="button" class="minute">35</button>
+  <button value="40" type="button" class="minute">40</button>
+  <button value="45" type="button" class="minute">45</button>
+  <button value="50" type="button" class="minute">50</button>
+  <button value="55" type="button" class="minute">55</button>
+</div>
+</body>
+</html>
