@@ -13,11 +13,38 @@
         this.value = "";
       });
 
+      $(':input').keydown(function(e) {
+          if ((e.which == 8 || e.which == 46) && $(this).val() =='') {
+              $(this).prev('input').focus();
+          }
+      });
+
       $('input').keyup(function(){
+        if(($('#input-1').val() > 2 )) {
+          $('.error.invalid-time').show();
+        } else if ($('#input-3').val() > 5) {
+          $('.error.invalid-time').show();
+        }
+        else {
+          $('.error.invalid-time').hide();
+        }
+
+        if (($('#input-4').val() ==  0 ) || ($('#input-4').val() ==  5 )) {
+          $('.error.invalid-interval').hide();
+        } else {
+          $('.error.invalid-interval').show();
+        }
        if($(this).val().length==$(this).attr("maxlength")){
            $(this).next().focus();
+
+
+
        }
+
+
      });
+
+
 
     });
 
@@ -39,6 +66,8 @@
   input[type=number] {
     -moz-appearance: textfield;
   }
+
+  .error {background: #eb4034; display: block; color: #fff; font-size: 20px; padding: 5px; margin: 5px 0; display: none;}
   </style>
 
 
@@ -50,6 +79,8 @@
     <input type="number" class="value" maxlength="1" id="input-1" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number" placeholder="0" autofocus/>
     <input type="number" class="value" maxlength="1" id="input-2" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number" placeholder="0"/>:<input type="number" class="value" maxlength="1" id="input-3" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number" placeholder="0"/>
     <input type="number" class="value" maxlength="1" id="input-4" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number" placeholder="0"/>
+    <div class="error invalid-time">Error...Invalid Time</div>
+    <div class="error invalid-interval">Error...Time must be in 5 minute intervals</div>
   </div>
 
   <br/>
