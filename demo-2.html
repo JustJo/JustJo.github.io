@@ -13,6 +13,11 @@
       var $two = 0;
       var $three = 0;
       var $four = 0;
+
+      $("input").focus(function() {
+        this.value = "";
+      });
+
       $('input#input-1').keyup(function(){
           if($(this).val().length==$(this).attr("maxlength")){
               $(this).next().focus();
@@ -72,10 +77,10 @@
 <body>
 
   <div id="display-time">
-      <input class="value" id="position-4" value="0">
-      <input class="value" id="position-3" value="0">:
-      <input class="value" id="position-2" value="0">
-      <input class="value" id="position-1" value="0">
+      <input class="value" id="position-4" value="0" id="input-1" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number">
+      <input class="value" id="position-3" value="0" id="input-1" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number">:
+      <input class="value" id="position-2" value="0" id="input-1" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number">
+      <input class="value" id="position-1" value="0" id="input-1" min="0" inputmode="numeric" pattern="[0-9]*" title="Non-negative integral number">
   </div>
 
   <br/>
