@@ -3,7 +3,8 @@
 <html>
 <head>
   <title>Improving User Management with User Profiles</title>
-  <meta name="description" content="This case study details problems that administrators faced when it came to user management in iAuditor, and how those problems were solved by introducing User Profiles to the product.<meta property="og:image" content="https://justjo.github.io/resources/images/social.png"/>
+  <meta name="description" content="This case study details problems that administrators faced when it came to user management in iAuditor, and how those problems were solved by introducing User Profiles to the product."/>
+  <meta property="og:image" content="/resources/img/social.png"/>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,10 +32,12 @@
   <script>
     $(document).ready(function() {
       $("#open-menu-button").click(function(){
-        $("#navigation-panel").show( "slide", { direction: "right"  }, 800 );
+        $("#navigation-panel").show( "slide", { direction: "right"  }, 300 );
+        $("body").addClass("open");
       });
       $("#close-menu-button").click(function(){
-        $("#navigation-panel").hide( "slide", { direction: "right"  }, 800 );
+        $("#navigation-panel").hide( "slide", { direction: "right"  }, 300 );
+        $("body").removeClass("open");
       });
     });
   </script>
@@ -397,7 +400,7 @@
     <img src="/resources/img/user-management/single-1.png" class="responsive img-first" width="100%">
   </div>
   <div class="desktop-col-6 desktop-offset-0 laptop-col-6 laptop-offset-0 tablet-col-6 tablet-offset-0 phone-col-12">
-    <img src="/resources/img/user-management/single-2.png" class="responsive img-last" width="100%"">
+    <img src="/resources/img/user-management/single-2.png" class="responsive img-last" width="100%">
     <div class="spacer-20"></div>
   </div>
 </div>
@@ -503,7 +506,7 @@
     <div class="spacer-50"></div>
     <h3>User Settings</h3>
     <div class="spacer-10"></div>
-    <p>Here administrators can view and edit user details, notification settings and permissions. In addition, we have included the ability for managing password resets. </p>
+    <p>Here administrators can view and edit user details, notification settings and permissions. In addition, we have included the ability for managing password resets.</p>
   </div>
 </div>
 </div>
@@ -661,5 +664,4 @@
     </div>
   </div>
 </div>
-
 </body>

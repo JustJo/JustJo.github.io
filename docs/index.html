@@ -3,7 +3,8 @@
 <html>
 <head>
   <title>Joanne Walter, Product Designer - Portfolio</title>
-  <meta name="description" content="Product Designer based in Queensland, Australia.  Currently working at JESI improving the safety of remote workers around the world<meta property="og:image" content="https://justjo.github.io/resources/images/social.png"/>
+  <meta name="description" content="Product Designer based in Queensland, Australia.  Currently working at JESI improving the safety of remote workers around the world"/>
+  <meta property="og:image" content="/resources/img/social.png"/>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,10 +32,12 @@
   <script>
     $(document).ready(function() {
       $("#open-menu-button").click(function(){
-        $("#navigation-panel").show( "slide", { direction: "right"  }, 800 );
+        $("#navigation-panel").show( "slide", { direction: "right"  }, 300 );
+        $("body").addClass("open");
       });
       $("#close-menu-button").click(function(){
-        $("#navigation-panel").hide( "slide", { direction: "right"  }, 800 );
+        $("#navigation-panel").hide( "slide", { direction: "right"  }, 300 );
+        $("body").removeClass("open");
       });
     });
   </script>
@@ -108,8 +111,6 @@
     </div>
   </div>
 </div>
-
-
 <div class="white-bg overflow-visible">
   <div class="container">
     <div class="row">

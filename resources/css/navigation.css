@@ -1,14 +1,14 @@
 #header {
   background: #000;
   overflow: hidden;
-  padding: 15px;
+  padding: 20px;
 }
 
 .small-view {display: none;}
 
 #navigation-panel {
   display: none;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   padding: 15px;
   background: #000;
@@ -21,7 +21,7 @@
 
 #navigation-panel ul {
   margin: 0;
-  padding: 0;
+  padding: 40px 0 0 0;
 }
 #navigation-panel ul li {
   list-style: none;
@@ -91,7 +91,7 @@
 .menu-button span {
   color: #fff;
   font-size: 40px;
-  line-height: 80px;
+  line-height: 70px;
 }
 
 

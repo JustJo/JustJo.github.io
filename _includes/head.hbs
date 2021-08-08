@@ -25,10 +25,12 @@
 <script>
   $(document).ready(function() {
     $("#open-menu-button").click(function(){
-      $("#navigation-panel").show( "slide", { direction: "right"  }, 800 );
+      $("#navigation-panel").show( "slide", { direction: "right"  }, 300 );
+      $("body").addClass("open");
     });
     $("#close-menu-button").click(function(){
-      $("#navigation-panel").hide( "slide", { direction: "right"  }, 800 );
+      $("#navigation-panel").hide( "slide", { direction: "right"  }, 300 );
+      $("body").removeClass("open");
     });
   });
 </script>

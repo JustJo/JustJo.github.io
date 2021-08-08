@@ -30,7 +30,10 @@ body {
 	font-family: 'Roboto', sans-serif;
 	background: #fff;
 }
-
+body.open {
+	overflow: hidden;
+	height: 100%;
+}
 
 
 /*Typography*/
@@ -94,7 +97,7 @@ a:hover {color: #AF05FF;}
 
 /*Images*/
 img.responsive {max-width: 100%; margin: 0 auto; display: block;}
-img.banner {max-width: 450px;}
+img.banner {max-width: 450px; width: 100%;}
 img.border {border: 1px solid #eee;}
 img.img-first {padding-right: 15px;}
 img.img-last {padding-left: 15px;}
@@ -107,7 +110,7 @@ img.img-last {padding-left: 15px;}
 
 /*Containers*/
 .container {padding: 0;}
-.wrapper {padding: 0 15px; display: block; overflow: hidden;}
+.wrapper {padding: 0 30px; display: block; overflow: hidden;}
 .light-bg {background: #f8f8f8; overflow: hidden;}
 .white-bg {background: #fff; overflow: hidden;}
 .dark-bg {background: #000; overflow: hidden; color: #fff}
