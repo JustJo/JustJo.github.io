@@ -136,7 +136,7 @@ hr {border: 1px solid #eee;}
 .hero {text-align: center;}
 .hero .max-width-normal {max-width: 500px; margin: 0 auto;}
 .hero .max-width-large {max-width: 600px; margin: 0 auto;}
-.hero img {max-height: 400px; margin-bottom: 10px;}
+.hero img {max-height: 400px; margin-bottom: 10px; margin-top: 20px;}
 .hero hr {border: 2px solid #000;}
 .hero .hero-byline {
   font-size: 16px;
