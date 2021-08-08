@@ -1,0 +1,34 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/grid.css">
+<link rel="stylesheet" href="/resources/css/styles.css">
+<link rel="stylesheet" href="/resources/css/navigation.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+<!--GA-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-177368151-1');
+</script>
+<!--END GA-->
+
+<script>
+  $(document).ready(function() {
+    $("#open-menu-button").click(function(){
+      $("#navigation-panel").show( "slide", { direction: "right"  }, 800 );
+    });
+    $("#close-menu-button").click(function(){
+      $("#navigation-panel").hide( "slide", { direction: "right"  }, 800 );
+    });
+  });
+</script>

@@ -1,0 +1,376 @@
+---
+meta:
+  title: "Improving User Management with User Profiles"
+  description: "This case study details problems that administrators faced when it came to user management in iAuditor, and how those problems were solved by introducing User Profiles to the product."
+
+navigation:
+  -
+    title: The Challenge
+    link: "#the-challenge"
+  -
+    title: Defining the Problem
+    link: "#defining-the-problem"
+  -
+    title: Improving Administrators Visibility
+    link: "#improving-administrators-visibility"
+  -
+    title: The Result
+    link: "#the-result"
+  -
+    title: Conclusion
+    link: "#conclusion"
+
+hero:
+  image: "/resources/img/users.png"
+  width: "max-width-large"
+  style: ""
+  text: "Improving User Management with User Profiles"
+  byline:
+    width: "max-width-normal"
+    emphasis: "iAuditor - SafetyCulture"
+    text: "This case study details problems that administrators faced when it came to user management in iAuditor, and how those problems were solved by introducing User Profiles to the product."
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+  {{> meta }}
+  {{> head }}
+</head>
+<body>
+{{> header }}
+{{> hero }}
+
+
+
+<div class="main-content">
+
+{{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='70'}}
+    <a name="the-challenge"></a><h2>The Challenge</h2>
+    <p>By the end of 2017, SafetyCulture’s flagship product <a href="https://safetyculture.com/iauditor/" target="_blank">iAuditor</a> was in the hands of users all around the world.</p>
+    <p>When iAuditor came to market in 2012, its customer base mostly consisted of small accounts. As the product matured, it attracted larger organisations. Unfortunately, the user management tools remained largely untouched, resulting in customers struggling to perform basic user management tasks.</p>
+    <p>I undertook the task of improving the administrative experience of user management within iAuditor.</p>
+    {{> spacer size='50'}}
+    <a name="defining-the-problem"></a><h2>Defining the Problem</h2>
+    <p>To understand the problem space we collected internal feedback from support staff who help iAuditor administrators daily. We also conducted extensive customer interviews. Through this research phase we identified administrative goals, jobs to be done and pain points which led to the following problem statement:</p>
+    <p><strong>It’s time consuming, and sometimes impossible for administrators to find information they need about their iAuditor users.</strong></p>
+    <h3>Scattered User Information</h3>
+    <p>Administrators, for a variety of reasons ranging from user set up, to troublehooting, often seek the following user information:</p>
+    <ul>
+      <li>General details (name, email address, device allocation)</li>
+      <li>Permission settings</li>
+      <li>Group membership</li>
+      <li>Template access</li>
+    </ul>
+    <p>Unfortunately there was no one place in iAuditor where this information was accessible. Detailed below are the four sections of iAuditor that administrators navigated through to find such information.</p>
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='light-bg center'}}
+  {{> columns large='6' large_offset='3' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <div class="marker">1</div>
+    <h3>Users Page</h3>
+    <p>This page listed out every user, along with their name, email address, device allocation and status.</p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='light-bg center'}}
+  {{> columns large='10' large_offset='1' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='10' }}
+    <img src="/resources/img/user-management/users-old.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg center'}}
+  {{> columns large='6' large_offset='3' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <div class="marker">2</div>
+    <h3>Permissions Page</h3>
+    <p>This page listed out every user, who has permissions assigned to them, along with their permission setting.</p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='white-bg center'}}
+  {{> columns large='10' large_offset='1' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='10' }}
+    <img src="/resources/img/user-management/permissions-old.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='light-bg center'}}
+  {{> columns large='6' large_offset='3' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <div class="marker">3</div>
+    <h3>Groups Page</h3>
+    <p>This page listed all the groups, to find out what groups a user belonged to required opening each group and searching for that user’s name.</p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='light-bg center'}}
+  {{> columns large='10' large_offset='1' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='10' }}
+    <img src="/resources/img/user-management/groups-old.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg center'}}
+  {{> columns large='6' large_offset='3' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <div class="marker">4</div>
+    <h3>Templates Page</h3>
+    <p>This page listed all the templates, to find out what templates a user had access to required opening each template and searching for that user’s name.</p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='white-bg center'}}
+  {{> columns large='10' large_offset='1' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='10' }}
+    <img src="/resources/img/user-management/templates-old.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='light-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <div class="marker"><span class="material-icons-round" style="font-size: 40px; line-height: 55px">warning</span></div>
+    <h3>Hang on, that means...</h3>
+    <p>In an account that had 4 groups and 4 templates, the administrator would need to visit 12 pages to gather the user information they commonly require for just one user. Given that most accounts have considerably more templates and groups, it is clear to see why this process is so frustrating.</p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='light-bg center'}}
+  {{> columns large='10' large_offset='1' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='10' }}
+    <img src="/resources/img/user-management/story.png" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='70' }}
+    <h3>Unmet needs</h3>
+    <p>While the core issue revolved around visibility, there were other, more managerial, tasks that administrators commonly needed to do, but couldn’t. These included:</p>
+    <ul>
+      <li>Editing a user’s account details (name, email address, time zone and notification settings)</li>
+      <li>Resetting a user’s password</li>
+      <li>Viewing what devices a user had registered</li>
+      <li>Removing devices on behalf of the user</li>
+    </ul>
+    {{> spacer size='50' }}
+    <a name="improving-administrators-visibility"></a><h2>Improving Administrators Visibility</h2>
+    <p>Equipped with a clear understanding of the problem, our attention turned to how we might provide administrators with easy access and management of user information in one location. After thorough consideration, it was determined that we could provide this access by introducing User Profiles to iAuditor. A User profile would give administrators a central place where they could:</p>
+    <ul>
+      <li>View and edit basic user details/settings</li>
+      <li>View and remove user devices</li>
+      <li>View a list of all the templates a user had access to</li>
+      <li>View a list of all the groups a user was a member of</li>
+    </ul>
+    <h3>Early Mockups</h3>
+    <p>We produced mockups that helped internal stakeholders visualise our solution and ultimately get buy-in to proceed with the project. We also utilised these mockups to validate our solution during user testing sessions. For our user testing sessions we created a basic prototype with these mocks using Invision.</p>
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+<div style="overflow: hidden">
+  {{> columns large='6' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/mock-1.png" class="border responsive" width="100%">
+  {{> columns-footer }}
+  {{> columns large='6' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/mock-2.png" class="border responsive" width="100%">
+  {{> columns-footer }}
+  {{> columns large='6' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/mock-3.png" class="border responsive" width="100%">
+  {{> columns-footer }}
+  {{> columns large='6' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/mock-4.png" class="border responsive" width="100%">
+  {{> columns-footer }}
+</div>
+
+
+{{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='70' }}
+    <h3>Efficiency vs Confidence</h3>
+    <p>In our proposed User Profile, administrators could do two core things, view and edit data. Alot of thought went into how we would handle these two states. Commonly there are two patterns for editing data.</p>
+    <p><strong>Single-field inline editing:</strong> With this approach the edit mode is integrated into the view mode, allowing for quick single field editing. This solution requires additional UI on each field to show that it is editable. The downside of this method is that unintentional edits are easy to make. This style favours efficiency over confidence.</p>
+    {{> spacer size='20' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+{{> container type='white-bg'}}
+  {{> columns large='6' large_offset='0' medium='6' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/single-1.png" class="responsive img-first" width="100%">
+  {{> columns-footer }}
+  {{> columns large='6' large_offset='0' medium='6' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/single-2.png" class="responsive img-last" width="100%"">
+    {{> spacer size='20' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <p><strong>Multi-field inline editing:</strong> With this approach a user switches between the view and edit state. Because the two states are separate, unintentional edits are less likely to occur, but the user has to click more. This style favours confidence over efficiency.</p>
+    {{> spacer size='20' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg'}}
+  {{> columns large='6' large_offset='0' medium='6' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/multi-1.png" class="responsive img-first" width="100%">
+  {{> columns-footer }}
+  {{> columns large='6' large_offset='0' medium='6' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/multi-2.png" class="responsive img-last" width="100%">
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <p>For administrative tasks we concluded that we should favour confidence over efficiency, which resulted in us going with the multi-field approach.</p>
+    <h3>Scalability</h3>
+    <p>iAuditor, like many SASS products, evolved constantly. In a year’s time, the needs of administrators would likely expand. With this in mind, a core focus throughout the design process was scalability.</p>
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='dark-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <a name="the-result"></a><h2>The Result</h2>
+    <p>In 2018 User Profiles were released in iAuditor, accessible from the User List page. At the time of writing this article most of the features described below are implemented. A User Profile contains 4 tabs: user settings, devices, templates and groups. Adding to and restructuring these tabs is possible as the product grows, ensuring scalability.</p>
+  {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='light-bg center'}}
+  {{> columns large='12' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <img src="/resources/img/user-management/user-profile-top.png" class="responsive" width="100%">
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+
+
+{{> container type='white-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <h3>User Settings</h3>
+    {{> spacer size='10' }}
+    <p>Here administrators can view and edit user details, notification settings and permissions. In addition, we have included the ability for managing password resets. </p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='white-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/details.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+    <hr />
+    {{> spacer size='50' }}
+    <img src="/resources/img/user-management/password.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+    <hr />
+    {{> spacer size='50' }}
+    <img src="/resources/img/user-management/notifications.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+    <hr />
+    {{> spacer size='50' }}
+    <img src="/resources/img/user-management/permissions.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+
+{{> container type='light-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <h3>Devices</h3>
+    <p>On the devices page, administrators can view and remove user devices. We also provided metadata around the OS and iAuditor version running on each device. Administrators require this data when performing specific troubleshooting tasks with their users. </p>
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='light-bg center'}}
+  {{> columns large='12' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/devices.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+
+{{> container type='white-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <h3>Templates</h3>
+    <p>Administrators now have a quick and easy way of seeing what templates a user has access to, along with their access permission.</p>
+    {{> spacer size='20' }}
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='white-bg center'}}
+  {{> columns large='12' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/templates.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='light-bg center'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <h3>Groups</h3>
+    <p>This tab lists all the groups a user is a member of, along with information regarding when they joined the group and who added them.</p>
+    {{> spacer size='20' }}
+  {{> columns-footer }}
+{{> container-footer }}
+{{> container type='light-bg center'}}
+  {{> columns large='12' large_offset='0' medium='12' medium_offset='0' small='12' }}
+    <img src="/resources/img/user-management/groups.png" class="responsive" width="100%">
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> container type='white-bg '}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='50' }}
+    <a name="conclusion"></a><h2>Conclusion</h2>
+    <p>We intended to measure the impact of this project by monitoring the number of support tickets that came through regarding specific administrative tasks and comparing them to our historical data. Unfortunately, there was an internal change to how support requests were categorised soon after the launch of User Profiles. This meant that we didn't end up with quantitive data to verify if this project was a success. However we had enough qualitative feedback from customers and internally to indicate that administrators now have the visibility and ability they require to more effectively manage their iAuditor users</p>
+    {{> spacer size='50' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+
+{{> footer }}
+
+</body>

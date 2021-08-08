@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="desktop-col-10 desktop-offset-1 laptop-col-10 laptop-offset-1 tablet-col-12 phone-col-12">
+      <div class="wrapper">
+        <div class="hero {{ hero.style }}" >
+          {{#if hero.image}}
+          <img src="{{ hero.image }}" class="responsive"/>
+          {{/if}}
+          <h1 class="{{ hero.width }}">{{{ hero.text }}}</h1>
+
+          {{#if hero.byline.text }}
+          <p class="hero-byline {{ hero.byline.width }}">
+            {{#if hero.byline.emphasis }}
+              <span class="hero-byline-emphasis">
+                {{ hero.byline.emphasis }}
+              </span>
+            {{/if}}
+            {{ hero.byline.text }}
+          </p>
+          {{/if}}
+
+          {{#if navigation.length}}
+            <div class="hero-nav">
+              <ul>
+                {{#each navigation}}
+                  <li><a href="{{link}}">{{title}}</a></li>
+                {{/each}}
+              </ul>
+            </div>
+          {{/if}}
+
+          <div class="spacer-50"></div>
+          <hr/>
+          <div class="spacer-10"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+---
+meta:
+  title: "Joanne Walter, Product Designer - Portfolio"
+  description: "Product Designer based in Queensland, Australia.  Currently working at JESI improving the safety of remote workers around the world"
+
+hero:
+  image: "/resources/img/bring-solutions.png"
+  width: "max-width-large"
+  style: "homepage"
+  text: "I’m a Product Designer who is passionate about <strong>finding</strong>, <strong>understanding</strong> and <strong>solving problems</strong>. I currently work at JESI helping to improve the safety of remote workers around the world."
+  byline:
+    width: "max-width-normal"
+    emphasis: ""
+    text: ""
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+  {{> meta }}
+  {{> head }}
+</head>
+<body>
+{{> header }}
+{{> hero }}
+
+
+{{> container type='white-bg overflow-visible'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='70' }}
+    <h2>Case Studies</h2>
+    {{> spacer size='10' }}
+    {{> cs_card
+      cs_card_link='/case-study-1'
+      cs_card_logo='/resources/img/logos/logo-iauditor.png'
+      cs_card_title='Defining product vision at SafetyCulture'
+      cs_card_info='This case study details the process I used to define and deliver a vision for team administration within iAuditor.'
+    }}
+    {{> spacer size='40' }}
+    {{>cs_card
+      cs_card_link='/case-study-2'
+      cs_card_logo='/resources/img/logos/logo-iauditor.png'
+      cs_card_title='Improving User Management in iAuditor'
+      cs_card_info='Redesigning user management tools to increase administrative visibility and capability.'
+    }}
+    {{> spacer size='40' }}
+  {{> columns-footer }}
+{{> container-footer }}
+
+
+{{> footer }}
+</body>
