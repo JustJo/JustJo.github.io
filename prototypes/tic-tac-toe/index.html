@@ -1,0 +1,195 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="./styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+  <script>
+  $(document).ready(function() {
+
+    var $counter = 0;
+
+    $(".grid").click(function() {
+
+      //Turn Counter
+      $counter++;
+
+      //Place X or 0
+      if ($('.turn-0').hasClass('hide')){
+        //Player X's Turn
+        $(this).val('X');
+        $(this).html( "<span class='material-icons player-x'>close</span>" );
+        var $round = 'X';
+      } else {
+        //Player 0's turn
+        $(this).val('0');
+        $(this).html( "<span class='material-icons player-0'>panorama_fish_eye</span>" );
+        var $round = '0';
+      }
+
+      //Update Player Placement
+      var $1 = $(".grid-1").val();
+      var $2 = $(".grid-2").val();
+      var $3 = $(".grid-3").val();
+      var $4 = $(".grid-4").val();
+      var $5 = $(".grid-5").val();
+      var $6 = $(".grid-6").val();
+      var $7 = $(".grid-7").val();
+      var $8 = $(".grid-8").val();
+      var $9 = $(".grid-9").val();
+
+      //Disable Option
+      $(this).attr("disabled", true);
+
+      //Logic
+      var $win = false;
+
+      //Top Row
+      if (( $1 == $round ) && ( $2 == $round ) && ( $3 == $round )){
+        $(".grid-1").addClass("highlight");
+        $(".grid-2").addClass("highlight");
+        $(".grid-3").addClass("highlight");
+        $win = true;
+      }
+
+      //Middle Row
+      if (( $4 == $round ) && ( $5 == $round ) && ( $6 == $round )){
+        $(".grid-4").addClass("highlight");
+        $(".grid-5").addClass("highlight");
+        $(".grid-6").addClass("highlight");
+        $win = true;
+      }
+
+      //Bottom Row
+      if (( $7 == $round ) && ( $8 == $round ) && ( $9 == $round )){
+        $(".grid-7").addClass("highlight");
+        $(".grid-8").addClass("highlight");
+        $(".grid-9").addClass("highlight");
+        $win = true;
+      }
+
+      //First Column
+      if (( $1 == $round ) && ( $4 == $round ) && ( $7 == $round )){
+        $(".grid-1").addClass("highlight");
+        $(".grid-4").addClass("highlight");
+        $(".grid-7").addClass("highlight");
+        $win = true;
+      }
+
+      //Second Column
+      if (( $2 == $round ) && ( $5 == $round ) && ( $8 == $round )){
+        $(".grid-2").addClass("highlight");
+        $(".grid-5").addClass("highlight");
+        $(".grid-8").addClass("highlight");
+        $win = true;
+      }
+
+      //Third Column
+      if (( $3 == $round ) && ( $6 == $round ) && ( $9 == $round )){
+        $(".grid-3").addClass("highlight");
+        $(".grid-6").addClass("highlight");
+        $(".grid-9").addClass("highlight");
+        $win = true;
+      }
+
+      //Diagonal Left Top to Bottom Right
+      if (( $1 == $round ) && ( $5 == $round ) && ( $9 == $round )){
+        $(".grid-1").addClass("highlight");
+        $(".grid-5").addClass("highlight");
+        $(".grid-9").addClass("highlight");
+        $win = true;
+      }
+
+      //Diagonal Right Top to Bottom Left
+      if (( $3 == $round ) && ( $5 == $round ) && ( $7 == $round )){
+        $(".grid-3").addClass("highlight");
+        $(".grid-5").addClass("highlight");
+        $(".grid-7").addClass("highlight");
+        $win = true;
+      }
+
+      //Win or Draw Logic
+      if ($win == true){
+        $(".winner").slideToggle().addClass("bg-"+$round);
+        if ($round == 'X'){
+          $(".winner").html("<span class='material-icons player-x'>close</span> Wins");
+        } else {
+          $(".winner").html("<span class='material-icons player-0'>panorama_fish_eye</span> Wins");
+        }
+        $(".grid").attr("disabled", true);
+        $(".grid").addClass("game-over");
+      } else if ($counter == 9){
+        //Draw
+        $(".draw").removeClass("hide");
+      }
+
+      //Switch Player
+      $(".player").toggleClass("hide");
+
+    });
+
+    //Restart Game
+    $(".restart").click(function() {
+
+      //Renable and Reset Playing Board
+      $(".grid").attr("disabled", false);
+      $(".grid").removeClass("highlight");
+      $(".grid").val("");
+      $(".grid").html("");
+
+      //Reset Player Turn
+      $(".turn-X").removeClass("hide");
+      $(".turn-0").addClass("hide");
+
+      //Hide Winner and Draw Divs
+      if ($(".winner").is(":visible")) {
+        $(".winner").slideToggle();
+        $(".winner-content").html("");
+      }
+      if ($(".draw").is(":visible")){
+        $(".draw").addClass("hide");
+      }
+      //Reset Turn Counter
+      $counter = 0;
+    });
+
+  });
+
+  </script>
+</head>
+<body>
+
+<h1>Tic Tac Toe</h1>
+<h2>For Two Players</h2>
+
+<!-- Who's Turn -->
+<div class="player turn-X"><span class='material-icons player-x'>close</span>'s turn</div>
+<div class="player turn-0 hide"><span class='material-icons player-0'>panorama_fish_eye</span>'s turn</div>
+<div class="draw hide">It's a Draw</div>
+
+<!--Playing Board-->
+<div class="playing-board">
+<button class="grid grid-1"></button>
+<button class="grid grid-2"></button>
+<button class="grid grid-3"></button>
+<div class="clear"></div>
+<button class="grid grid-4"></button>
+<button class="grid grid-5"></button>
+<button class="grid grid-6"></button>
+<div class="clear"></div>
+<button class="grid grid-7"></button>
+<button class="grid grid-8"></button>
+<button class="grid grid-9"></button>
+<div class="clear"></div>
+</div>
+
+<div class="winner hide"></div>
+<div class="restart">Restart Game</div>
+
+<div class="footer">Built by <a href="https://justjo.github.io/">Joanne Walter</a></div>
+
+</body>
+</html>
