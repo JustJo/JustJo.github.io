@@ -154,19 +154,36 @@ h2 {
 	.container.size-20 .cards button {height: 100px; background-size: 70%;}
 }
 
+
+@media only screen and (max-width: 640px) {
+	.container.size-10 .cards button {height: 100px; background-size: 85%;}
+}
+
 @media only screen and (max-width: 600px) {
 	.container.size-6  {max-width: 100%; margin: 0 auto}
 	.container.size-6 .wrap {width: 33%;}
-	.container.size-6 .cards button {height: 100px;}
+	.container.size-6 .cards button {height: 120px; background-size: 70%;}
 
 	.container.size-10 .wrap {width: 25%;}
-	.container.size-10 .cards button {height: 80px; background-size: 90%;}
+	.container.size-10 .cards button {height: 120px; background-size: 80%;}
 
 	.container.size-20 {max-width: 100%; margin: 0 auto}
 	.container.size-20 .wrap {width: 25%;}
+	.container.size-20 .cards button {height: 100px; background-size: 90%;}
+}
+
+@media only screen and (max-width: 450px) {
+	.container.size-6 .cards button {height: 100px; background-size: 90%;}
+	.container.size-10 .cards button {height: 80px; background-size: 85%;}
 	.container.size-20 .cards button {height: 80px; background-size: 90%;}
 }
 
+
+@media only screen and (max-width: 350px) {
+	.container.size-6 .cards button {height: 80px; background-size: 90%;}
+	.container.size-10 .cards button {height: 50px; background-size: 85%;}
+	.container.size-20 .cards button {height: 80px; background-size: 90%;}
+}
 
 
 .container.size-15 {max-width: 1000px; margin: 0 auto}
