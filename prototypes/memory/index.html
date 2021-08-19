@@ -1,0 +1,224 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <script>
+    $(document).ready(function() {
+
+      //Variables
+      var $click_counter = 0;
+      var $click_total = 0;
+      var $card1 = 0;
+      var $card2 = 0;
+      var $match_count = 0;
+      var $level;
+      var $level_pairs;
+      var $i = 1;
+      var interval;
+
+      //Place cards
+      function laycards() {
+        while ($i <= $level_pairs) {
+          $(".cards").append("<div class='wrap'><button value='" + $i + "'></button></div><div class='wrap'><button value='" + $i + "'></button></div>");
+          $i++;
+        }
+        $(".container").addClass("size-" + $level_pairs);
+        card_clicks();
+      }
+
+      //Shuffle Playing Cards
+      //https://jsfiddle.net/C6LPY/2/
+      function shuffle() {
+        var parent = $(".cards");
+        var divs = parent.children();
+        while (divs.length) {
+          parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+        }
+      }
+
+
+      //Disable all Cards
+      function disable() {
+        $(".cards").hide();
+      }
+
+      //Countdown Timer
+      //https://codepen.io/TLJens/pen/azedap
+      function countdown() {
+        clearInterval(interval);
+        interval = setInterval(function() {
+          var timer = $('.countdown').html();
+          timer = timer.split(':');
+          var minutes = timer[0];
+          var seconds = timer[1];
+          seconds -= 1;
+          if (minutes < 0) return;
+          else if ((seconds < 0) && (minutes != 0)) {
+            minutes -= 1;
+            seconds = 59;
+          } else if ((seconds < 10) && (length.seconds != 2)) {
+            seconds = '0' + seconds;
+          }
+          $('.countdown').html(minutes + ':' + seconds);
+          //If time runs out
+          if ((minutes == 0) && (seconds == 0)) {
+            disable();
+            $("#outcome-gameover").slideToggle();
+            clearInterval(interval);
+          }
+        }, 1000);
+      }
+
+      //Select Level
+      $(".difficulty button").click(function() {
+        $level = $(this).val();
+        if ($level == 1) {
+          $level_pairs = 6;
+        }
+        if ($level == 2) {
+          $level_pairs = 10;
+        }
+        if ($level == 3) {
+          $level_pairs = 20;
+        }
+        $(".splash-screen").fadeOut();
+        setTimeout(function() {
+          $(".game-board").fadeIn();
+          laycards();
+          shuffle();
+        }, 1000);
+      });
+
+      //Restart Game
+      $(".restart-game").click(function() {
+        location.reload();
+      });
+
+      //On Playing Card click
+      function card_clicks() {
+        $(".cards button").click(function() {
+
+          //Update Click Counter
+          $click_counter++;
+
+          //Update Click Total
+          $click_total++;
+          $(".click-total").html($click_total);
+
+          //If first Click, Start the Countdown Timer
+          //if ($click_total == 1) {
+            countdown();
+          //}
+
+          //Disable Card
+          $(this).attr("disabled", true);
+
+          //Mark Card as Selected
+          $(this).addClass("selected");
+
+          //Card 1
+          if ($click_counter == 1) {
+            //Set Card 1 Value
+            $card1 = $(this).val();
+
+            //Show Card Face (by assigning Card Value as Class Name)
+            $(this).addClass("card-" + $card1);
+          }
+
+          //Card 2
+          if ($click_counter == 2) {
+            //Set Card 2 Value
+            $card2 = $(this).val();
+
+            //Show Card Face (by assigning Card Value as Class Name)
+            $(this).addClass("card-" + $card2);
+
+            //Disable All cards
+            $(".cards button").attr("disabled", true);
+
+            setTimeout(function() {
+              //If Cards Match
+              if ($card1 == $card2) {
+                $(".cards button.selected").addClass("matched");
+                $match_count++;
+                $(".matches-total").html($match_count);
+              } else {
+                $(".cards button").removeClass("card-" + $card1);
+                $(".cards button").removeClass("card-" + $card2);
+              }
+
+              //Put cards back into rotation
+              $(".cards button").removeClass("selected");
+              $(".cards button").attr("disabled", false);
+              $(".cards button.matched").attr("disabled", true);
+
+              //If All Cards are Matched
+              if ($match_count == $level_pairs) {
+                $("#outcome-win").slideToggle();
+                clearInterval(interval);
+              }
+
+            }, 1000);
+
+            //Reset Click counter
+            $click_counter = 0;
+          }
+        });
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="splash-screen">
+      <div class="flex">
+        <h1>Memory</h1>
+        <p class="byline">Match all the pairs in this classic game</p>
+        <div class="difficulty">
+          <div class="button-group">
+            <button id="lvl-1" class="lvl" value="1">Easy</button>
+            <button id="lvl-2" class="lvl" value="2">Medium</button>
+            <button id="lvl-3" class="lvl" value="3">Hard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-board">
+      <div class="game-board-container">
+        <div class="flex">
+          <h1>Memory</h1>
+          <p class="byline">Match all the pairs in this classic game</p>
+          <div class="stats">
+            <p class="timer stats-container">Timer<span class="countdown stats-large">2:00</span></p>
+            <p class="clicks stats-container">Clicks<span class="click-total stats-large">0</span></p>
+            <p class="matches stats-container">Matches<span class="matches-total stats-large">0</span></p>
+          </div>
+          <div id="outcome-win" class="hide">
+            <img src="win.png">
+            <span>You Win!</span>
+            <div class="restart-game">Play Again</div>
+          </div>
+          <div id="outcome-gameover" class="hide">
+            <img src="gameover.png">
+            <span>Game Over</span>
+            <div class="restart-game">Play Again</div>
+          </div>
+          <div class="cards"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
