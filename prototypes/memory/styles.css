@@ -160,11 +160,11 @@ h2 {
 	.container.size-6 .cards button {height: 100px;}
 
 	.container.size-10 .wrap {width: 25%;}
-	.container.size-10 .cards button {height: 100px;}
+	.container.size-10 .cards button {height: 80px;}
 
 	.container.size-20 {max-width: 100%; margin: 0 auto}
 	.container.size-20 .wrap {width: 25%;}
-	.container.size-20 .cards button {height: 100px; background-size: 90%;}
+	.container.size-20 .cards button {height: 80px; background-size: 90%;}
 }
 
 
