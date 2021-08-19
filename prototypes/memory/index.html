@@ -12,6 +12,38 @@
   <script>
     $(document).ready(function() {
 
+      //Preload images
+      function preload(arrayOfImages) {
+        $(arrayOfImages).each(function(){
+          $('<img/>')[0].src = this;
+        });
+      }
+      preload([
+          'bear.png',
+          'bee.png',
+          'cat.png',
+          'chicken.png',
+          'cow.png',
+          'dog.png',
+          'dolphin.png',
+          'frog.png',
+          'gameover.png',
+          'hamster.png',
+          'koala.png',
+          'lion.png',
+          'monkey.png',
+          'mouse.png',
+          'panda.png',
+          'penguin.png',
+          'pig.png',
+          'sheep.png',
+          'snake.png',
+          'tiger.png',
+          'unicorn.png',
+          'whale.png',
+          'win.png'
+      ]);
+
       //Variables
       var $click_counter = 0;
       var $click_total = 0;
