@@ -1,0 +1,295 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Faster+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+
+
+  <script>
+    $(document).ready(function() {
+
+      var active_cell = 0;
+      var playable_cells = [];
+      var click_counter = 0;
+
+      // This function returns true
+      // if given 8 puzzle is solvable.
+      function isSolvable(puzzle) {
+        // Count inversions in given 8 puzzle
+        var inversion_count = 0;
+        for (var i = 1; i < puzzle.length; i++) {
+          var previous = puzzle[i - 1];
+          var current = puzzle[i];
+          if (current < previous) {
+            inversion_count++;
+          }
+        }
+        return (inversion_count % 2 == 0);
+      }
+
+      // This function is use to define the puzzle array
+      function puzzlegrid() {
+        var puzzle = [];
+        $.each($(".cell"), function(index, cell) {
+          index = index + 1;
+          var value = $(cell).find(".tile").attr("title");
+          // Value 0 is used for empty space
+          if (value !== undefined) {
+            //convert value to interger
+            value = parseInt(value);
+          } else {
+            value = 0
+          }
+          puzzle.push(value);
+        });
+        if (!isSolvable(puzzle)) {
+          startgame();
+        }
+      }
+
+      //Track Time
+      function timer() {
+        var interval;
+        clearInterval(interval);
+        var timer = "00:00";
+        interval = setInterval(function() {
+          timer = timer.split(':');
+          var minutes = timer[0];
+          var seconds = timer[1];
+          seconds++;
+          if (seconds == 60) {
+            minutes++
+            seconds = 0;
+            if (minutes < 10) {
+              minutes = "0" + minutes;
+            }
+          }
+          if (seconds < 10) {
+            seconds = "0" + seconds;
+          }
+          var elapsedTime = minutes + ':' + seconds;
+          timer = elapsedTime;
+          $('.timer').html(elapsedTime);
+          //if time gets to 60 minutes, game ends
+          if (elapsedTime == "60:00") {
+            $(".cell").attr("disabled", true);
+            clearInterval(interval);
+            $(".gameover").slideToggle();
+          }
+        }, 1000);
+      }
+
+      //Shuffle Playing Cards
+      //https://jsfiddle.net/C6LPY/2/
+      function shuffle() {
+        var parent = $(".grid");
+        var divs = parent.children();
+        while (divs.length) {
+          parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+        }
+      }
+
+      //Assign value to each card
+      //Find out which cell starts blank
+      function assignvalues() {
+        $.each($(".cell"), function(index, cell) {
+          var cell_value = index + 1;
+          $(this).val(cell_value);
+          if ($(this).is(":empty")) {
+            active_cell = cell_value;
+          }
+        })
+      }
+
+      function enablecards() {
+        //Disable all cells
+        $(".cell").attr("disabled", true);
+        $.each(playable_cells, function(index, value) {
+          $(".cell").each(function() {
+            if ($(this).val() == value) {
+              $(this).attr("disabled", false);
+            }
+          })
+        });
+      }
+
+      function playablecards() {
+        var valid_moves = [
+          [2, 4], //active_cell = 1, array index = 0
+          [1, 3, 5], //2
+          [2, 6], //3
+          [1, 5, 7], //4
+          [2, 4, 6, 8], //5
+          [3, 5, 9], //6
+          [4, 8], //7
+          [5, 7, 9], //8
+          [6, 8] //9
+        ];
+        playable_cells = valid_moves[active_cell - 1];
+      }
+
+      //Restart Game
+      $(".restart").click(function() {
+        location.reload();
+      });
+
+      $(".cell").click(function() {
+        var gameover;
+
+        //update click counter
+        click_counter++;
+        $(".clicks").html(click_counter);
+
+        //Get the inner div from the cell that was clicked
+        var cell_content = $(this).html();
+
+        //Move the image to the cell that was active (empty)
+        $.each($(".cell"), function() {
+          if ($(this).is(":empty")) {
+            $(this).html(cell_content);
+          }
+        });
+
+        //update active (empty) cell to be the cell that was just clicked
+        //empty the cell that was just clicked
+        active_cell = $(this).val();
+        $(this).empty();
+
+        //reset playable cards
+        playablecards();
+        enablecards();
+
+        //Check game status
+        $.each($(".cell"), function() {
+
+          //If Cell isn't Cell 9 (because this cell should be empty for the game to win)
+          if ($(this).val() != 9) {
+            //If this cells value equals the image title value
+            if ($(this).val() == $(this).find(".tile").attr("title")) {
+              gameover = true;
+            } else {
+              gameover = false;
+              return false;
+            }
+          }
+        });
+
+        if (gameover == true) {
+          $(".winner").show();
+          $(".cell").attr("disabled", true);
+          $(".cell").last().html("<div class='tile tile-9' title='9'></div>");
+          $(".tile-9").css({
+            "background-image": $(".tile-1").css('background-image')
+          });
+          clearInterval(interval);
+        } else {
+          $(".winner").hide();
+        };
+
+      });
+
+      function startgame() {
+        timer();
+        shuffle();
+        assignvalues();
+        playablecards();
+        enablecards();
+        puzzlegrid();
+      }
+
+
+      $(".puzzle-option").click(function() {
+        puzzle = $(this).attr("src");
+        $(".tile").css({
+          "background-image": "url(" + puzzle + ")"
+        });
+        $(".splash").fadeOut();
+        setTimeout(function() {
+          $(".game-board").fadeIn();
+        }, 1000);
+        startgame();
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>8 Puzzle</h1>
+    <div class="splash">
+      <h3>Select a puzzle</h3>
+      <img src="puzzle-1.png" class="puzzle-option">
+      <img src="puzzle-2.png" class="puzzle-option">
+      <img src="puzzle-3.png" class="puzzle-option">
+      <img src="puzzle-4.png" class="puzzle-option">
+      <img src="puzzle-5.png" class="puzzle-option">
+      <img src="puzzle-6.png" class="puzzle-option">
+      <img src="puzzle-7.png" class="puzzle-option">
+      <img src="puzzle-8.png" class="puzzle-option">
+      <img src="puzzle-9.png" class="puzzle-option">
+    </div>
+
+    <div class="game-board">
+      <div class="stats">
+        <div class="stat-item">Timer<span class="timer stat"></span></div>
+        <div class="stat-item">Clicks<span class="clicks stat">0</span></div>
+        <div class="outcome">
+          <div class="winner hide"><img src="winner.png">You Win<br /><span class="restart">Play Again</span></div>
+          <div class="gameover hide"><img src="gameover.png">You ran out of time!<br /><span class="restart">Play Again</span></div>
+        </div>
+      </div>
+      <div class="grid">
+        <button class="cell">
+          <div class="tile tile-1" title="1"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-2" title="2"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-3" title="3"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-4" title="4"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-5" title="5"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-6" title="6"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-7" title="7"></div>
+        </button>
+        <button class="cell">
+          <div class="tile tile-8" title="8"></div>
+        </button>
+        <button class="cell"></button>
+      </div>
+      <div class="spacer"></div>
+      <p class="restart">Restart Game</p>
+    </div>
+
+    <div class="footer">Built by <a href="https://justjo.github.io/">Joanne Walter</a></div>
+
+  </div>
+</body>
+
+</html>

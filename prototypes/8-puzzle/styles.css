@@ -1,0 +1,179 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+
+}
+*{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+body {
+	color: #000;
+	-webkit-font-smoothing:subpixel-antialiased;
+	font-family: 'Roboto', sans-serif;
+	background: #fff;
+	padding: 30px;
+}
+
+h1 {
+	font-family: 'Faster One', cursive;
+	font-size: 50px;
+	text-align: center;
+	padding-bottom: 40px;
+	text-transform: uppercase;
+}
+
+h3 {
+	font-weight: 600;
+	text-align: center;
+	padding-bottom: 20px;
+	text-transform: uppercase;
+}
+.hide {display: none;}
+.spacer {height: 30px; display: block; clear: both;}
+.splash {
+	max-width: 600px;
+	margin: 0 auto;
+}
+.splash img {
+	max-width: 30%;
+	padding: 0;
+	margin: 1%;
+}
+.splash img:hover {
+	cursor: pointer;
+	box-shadow: 0px 0px 10px #999;
+}
+
+
+.grid {
+	max-width: 300px;
+	margin: 20px auto 0 auto;
+	display: block;
+	clear: both;
+	background: red;
+}
+.cell {
+	border: none;
+	width: 100px;
+	height: 100px;
+	float: left;
+	padding: 0;
+	background: white;
+	cursor: pointer;
+}
+
+.cell:disabled {opacity: 100%}
+
+.game-board {
+	display: none;
+	overflow: hidden;
+}
+
+
+.tile {
+	display: block;
+	width: 100px;
+	height: 100px;
+	background-repeat: none;
+}
+
+.tile-1 {background-position: bottom 100px right 100px;}
+.tile-2 {background-position: bottom 100px right 200px;}
+.tile-3 {background-position: bottom 100px right 300px;}
+.tile-4 {background-position: bottom 200px right 100px;}
+.tile-5 {background-position: bottom 200px right 200px;}
+.tile-6 {background-position: bottom 200px right 300px;}
+.tile-7 {background-position: bottom 300px right 100px;}
+.tile-8 {background-position: bottom 300px left 200px;}
+.tile-9 {background-position: bottom 300px left 100px;}
+
+.game-board {
+	max-width: 300px;
+	margin: 0 auto;
+}
+.stats {
+	display: block;
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 14px;
+	padding-bottom: 40px;
+	overflow: hidden;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	padding: 20px 10px;
+}
+.stats .stat-item {
+	width: 50%;
+	float: left;
+	display: block;
+}
+.stats .stat {
+	font-size: 20px;
+	font-weight: 600;
+	display: block;
+}
+.stats .stat-item:first-child {
+	border-right: 1px solid #ccc;
+}
+
+
+.outcome {
+	text-align: center;
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	clear: both;
+	text-transform: none;
+}
+.outcome img {
+	max-width: 150px;
+	margin: 0 auto;
+	display: block;
+	padding: 30px 0 20px 0;
+}
+
+.outcome .restart {
+	font-size: 16px;
+	display: block;
+	padding-top: 10px;
+	font-weight: 400;
+}
+
+.footer {
+	padding: 50px 0;
+	text-align: center;
+}
+.footer a {
+	color: #000;
+}
+.footer a:hover {
+	color: #555;
+}
+
+.restart {
+	text-align: center;
+	text-decoration: underline;
+}
+.restart:hover {
+	cursor: pointer;
+	color: #555;
+}
