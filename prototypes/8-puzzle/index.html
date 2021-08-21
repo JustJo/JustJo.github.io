@@ -28,19 +28,26 @@
       var active_cell = 0;
       var playable_cells = [];
       var click_counter = 0;
+      var interval;
+
 
       // This function returns true
       // if given 8 puzzle is solvable.
       function isSolvable(puzzle) {
         // Count inversions in given 8 puzzle
         var inversion_count = 0;
-        for (var i = 1; i < puzzle.length; i++) {
-          var previous = puzzle[i - 1];
+        for (var i = 0; i < puzzle.length; i++) {
           var current = puzzle[i];
-          if (current < previous) {
-            inversion_count++;
+          if (current > 0) {
+            for (var j = i+1; j < puzzle.length; j++){
+              var next = puzzle[j];
+              if (next > 0 && current > next){
+                inversion_count++;
+              }
+            }
           }
         }
+        //console.log(inversion_count);
         return (inversion_count % 2 == 0);
       }
 
@@ -48,7 +55,6 @@
       function puzzlegrid() {
         var puzzle = [];
         $.each($(".cell"), function(index, cell) {
-          index = index + 1;
           var value = $(cell).find(".tile").attr("title");
           // Value 0 is used for empty space
           if (value !== undefined) {
@@ -59,14 +65,15 @@
           }
           puzzle.push(value);
         });
+        //console.log(puzzle);
         if (!isSolvable(puzzle)) {
+          //console.log("re-shuffling")
           startgame();
         }
       }
 
       //Track Time
       function timer() {
-        var interval;
         clearInterval(interval);
         var timer = "00:00";
         interval = setInterval(function() {
