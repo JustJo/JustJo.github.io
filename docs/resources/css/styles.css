@@ -88,6 +88,40 @@ ul li {
 }
 
 
+/*More Info in List*/
+ul li span.list-more-info {
+	display: block;
+	font-size: 16px;
+	color: #333;
+}
+ul li .list-more-info-toggle {
+	text-decoration: underline;
+	cursor: pointer;
+}
+ul li .list-more-info-toggle:hover {
+	text-decoration-style: dotted;
+	color: #777
+}
+ul.list-more-info {
+	list-style-type: square;
+	padding: 0 0 0 20px;
+	margin: 0;
+}
+ul.list-more-info li {
+	font-size: 16px;
+	color: #333;
+	padding-bottom: 2px;
+}
+.list-more-info-wrapper {
+	padding: 10px 0;
+	display: none;
+}
+.list-more-info-wrapper h4 {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+
 
 /*Links*/
 a {color: blue;}
@@ -222,7 +256,6 @@ hr {border: 1px solid #eee;}
 }
 
 
-
 /*Footer*/
 .footer {
   background: #000;
@@ -231,8 +264,17 @@ hr {border: 1px solid #eee;}
 }
 .footer p {
   color: #fff;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 22px;
-  text-align: center;
+	text-align: left;
   padding: 0;
+}
+.footer a {
+	font-size: 14px;
+	color: #fff;
+	padding: 5px 0;
+	text-decoration: none;
+}
+.footer a:hover {
+	text-decoration: underline;
 }
