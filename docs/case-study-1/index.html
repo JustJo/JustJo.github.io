@@ -32,13 +32,29 @@
   
   <script>
     $(document).ready(function() {
+  
+      //Navigation
       $("#open-menu-button").click(function(){
         $("#navigation-panel").show( "slide", { direction: "right"  }, 300 );
         $("body").addClass("open");
       });
+  
       $("#close-menu-button").click(function(){
         $("#navigation-panel").hide( "slide", { direction: "right"  }, 300 );
         $("body").removeClass("open");
+      });
+  
+      //List More Info
+      $(".list-more-info-toggle").click(function(){
+        var state = $(this).attr("title");
+        if (state == "show"){
+          $(this).attr("title", "hide");
+          $(this).html("Hide Details");
+        } else {
+          $(this).attr("title", "show");
+          $(this).html("Show Details");
+        }
+        $(this).parent().parent().find(".list-more-info-wrapper").slideToggle();
       });
     });
   </script>
@@ -448,7 +464,8 @@
     <div class="row">
       <div class="desktop-col-10 desktop-offset-1 laptop-col-10 laptop-offset-1 tablet-col-12 phone-col-12">
         <div class="wrapper">
-        <p><span class="material-icons">waving_hand</span><br/><strong>Jojo</strong> | Product Designer<br/>Website design and content © 2021 Joanne Walter</p>
+          <p><a href="/code-challenges/">Code Challenges</a> &nbsp; <br/>Website design and content © 2021 Joanne Walter</p>
+        <!--<p><span class="material-icons">waving_hand</span><br/><strong>Jojo</strong> | Product Designer<br/>Website design and content © 2021 Joanne Walter</p>-->
       </div>
       </div>
     </div>

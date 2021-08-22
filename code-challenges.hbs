@@ -1,0 +1,89 @@
+---
+meta:
+  title: "Code Challenges"
+  description: "..."
+  socials:
+    twitter: ""
+    facebook: ""
+
+hero:
+  image: "/resources/img/code-challenge.png"
+  width: "max-width-normal"
+  style: "subpage"
+  text: "Code Challenges"
+  byline:
+    width: "max-width-normal"
+    emphasis: ""
+    text: "Love Challenges, Be Intrigued by Mistakes, Enjoy Effort and Keep on Learning - Carol Dweck"
+
+---
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  {{> meta }}
+  {{> head }}
+</head>
+
+<body>
+  {{> header }}
+  {{> hero }}
+
+  {{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+  {{> spacer size='70'}}
+
+  <p>I am by no means a "programmer" or "coder", a quick glance at my source code will confirm this. I do, however, enjoy the process and challenge of building something with code.</p>
+  <p>Due to my background in web development, I have foundational knowledge of HTML, CSS, Javascript and jQuery.</p>
+  <p>Below is a selection of Code Challenges I've done.</p>
+
+  <ul>
+    <li><a href="/prototypes/tic-tac-toe/" target="_blank">Game: Tic Tac Toe</a>
+      <span class="list-more-info">Built in 2021 &nbsp; | &nbsp; <span class="list-more-info-toggle" title="show">Show details</span></span>
+      <div class="list-more-info-wrapper">
+        <h4>How this game works</h4>
+        <ul class="list-more-info">
+          <li>Each player takes turn to place their marker.</li>
+          <li>If a player gets three of their markers in a row (horizontally, vertically or diagonally) they win.</li>
+          <li>If 9 markers are placed and neither player gets 3 in a row, the game is over.</li>
+        </ul>
+      </div>
+    </li>
+    <li><a href="/prototypes/memory/" target="_blank">Game: Memory</a>
+      <span class="list-more-info">Built in 2021 &nbsp; | &nbsp; <span class="list-more-info-toggle" title="show">Show details</span></span>
+      <div class="list-more-info-wrapper">
+        <h4>How this game works</h4>
+        <ul class="list-more-info">
+          <li>The user selects game difficulty.  Easy has 6 matches.  Medium has 10 matches. Hard has 20 matches.</li>
+          <li>The cards are shuffled.</li>
+          <li>During gameplay, a countdown timer tracks time remaining, clicks are tracked and matches are tracked.</li>
+          <li>When two cards are turned over, they are checked to see if they match.  If they match they stay face up and are no longer selectable.  If they don't match they are turned face down and put back into game rotation.</li>
+          <li>If all cards have been matched within 2 minutes, the user wins.</li>
+          <li>If the countdown reaches 0 and there are still unmatched cards, the game is over.</li>
+        </ul>
+      </div>
+    </li>
+    <li><a href="/prototypes/8-puzzle/" target="_blank">Game: 8 Puzzle</a>
+      <span class="list-more-info">Built in 2021 &nbsp; | &nbsp; <span class="list-more-info-toggle" title="show">Show details</span></span>
+      <div class="list-more-info-wrapper">
+        <h4>How this game works</h4>
+        <ul class="list-more-info">
+          <li>The user selects a puzzle they would like to solve.</li>
+          <li>The selected puzzle pieces are shuffled.</li>
+          <li>A check is performed to ensure that the game is solvable, for a game to be solvable an even number of inversions are required. If the game is not solvable, the cards are reshuffled until a solvable game served up.</li>
+          <li>During gameplay, time elapsed and clicks/moves are tracked. </li>
+          <li>The user attempts to get all puzzle pieces into their correct position. </li>
+          <li>The user is only able to move pieces that are adjacent to the blank cell. </li>
+          <li>If all puzzle pieces are in their correct position, the user wins.</li>
+          <li>If the puzzle is not solved within 60 minutes, the game is over. </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  {{> columns-footer }}
+  {{> container-footer }}
+
+  {{> footer }}
+</body>

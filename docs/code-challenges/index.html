@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Code Challenges</title>
+  <meta name="description" content="..."/>
+  <meta property="og:image" content="/resources/img/social.png"/>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="stylesheet" href="/resources/css/grid.css">
+  <link rel="stylesheet" href="/resources/css/styles.css">
+  <link rel="stylesheet" href="/resources/css/navigation.css">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+  
+  <script>
+    $(document).ready(function() {
+  
+      //Navigation
+      $("#open-menu-button").click(function(){
+        $("#navigation-panel").show( "slide", { direction: "right"  }, 300 );
+        $("body").addClass("open");
+      });
+  
+      $("#close-menu-button").click(function(){
+        $("#navigation-panel").hide( "slide", { direction: "right"  }, 300 );
+        $("body").removeClass("open");
+      });
+  
+      //List More Info
+      $(".list-more-info-toggle").click(function(){
+        var state = $(this).attr("title");
+        if (state == "show"){
+          $(this).attr("title", "hide");
+          $(this).html("Hide Details");
+        } else {
+          $(this).attr("title", "show");
+          $(this).html("Show Details");
+        }
+        $(this).parent().parent().find(".list-more-info-wrapper").slideToggle();
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <!--Header-->
+  <div id="header">
+  
+    <!--Large View-->
+    <div class="large-view">
+      <div class="container">
+        <div class="row flex-center">
+          <div class="col-4">
+            <div class="logo-container flex-center">
+            <div class="logo"><a href="/"><img src="/resources/img/jojo-logo.svg"/></a></div>
+            <div class="logo-byline"><div>Jojo</div>Product Designer</div>
+            </div>
+          </div>
+          <div class="col-8">
+            <ul>
+              <li><a href="/">Case Studies</a></li>
+              <li><a href="/about/">About</a></li>
+              <li><a href="https://www.linkedin.com/in/%F0%9F%94%AE-joanne-walter-1029b2b5/" target="_blank">LinkedIn</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End Large View-->
+  
+    <!--Small View-->
+    <div class="small-view">
+      <div id="open-menu-button" class="menu-button"><span class="material-icons">menu</span></div>
+      <div class="logo-container flex-center">
+        <div class="logo"><a href="/"><img src="/resources/img/jojo-logo.svg"/></a></div>
+        <div class="logo-byline"><div>Jojo</div>Product Designer</div>
+      </div>
+    </div>
+    <!--End Small View-->
+  
+  </div>
+  <!--End Header-->
+  
+  <!--Navigation Panel: Small View-->
+  <div id="navigation-panel">
+    <div id="close-menu-button" class="menu-button"><span class="material-icons">close</span></div>
+    <div class="logo"><a href="/"><img src="/resources/img/jojo-logo.svg"/></a></div>
+      <ul>
+        <li><a href="/">Case Studies</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="https://www.linkedin.com/in/%F0%9F%94%AE-joanne-walter-1029b2b5/" target="_blank">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--End Navigation Panel: Small View-->
+  <div class="container">
+    <div class="row">
+      <div class="desktop-col-10 desktop-offset-1 laptop-col-10 laptop-offset-1 tablet-col-12 phone-col-12">
+        <div class="wrapper">
+          <div class="hero subpage" >
+            <img src="/resources/img/code-challenge.png" class="responsive"/>
+            <h1 class="max-width-normal">Code Challenges</h1>
+  
+            <p class="hero-byline max-width-normal">
+              Love Challenges, Be Intrigued by Mistakes, Enjoy Effort and Keep on Learning - Carol Dweck
+            </p>
+  
+  
+            <div class="spacer-50"></div>
+            <hr/>
+            <div class="spacer-10"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="white-bg">
+    <div class="container">
+      <div class="row">
+        <div class="wrapper">
+  <div class="desktop-col-8 desktop-offset-2 laptop-col-8 laptop-offset-2 tablet-col-12 tablet-offset-0 phone-col-12">
+  <div class="spacer-70"></div>
+
+  <p>I am by no means a "programmer" or "coder", a quick glance at my source code will confirm this. I do, however, enjoy the process and challenge of building something with code.</p>
+  <p>Due to my background in web development, I have foundational knowledge of HTML, CSS, Javascript and jQuery.</p>
+  <p>Below is a selection of Code Challenges I've done.</p>
+
+  <ul>
+    <li><a href="/prototypes/tic-tac-toe/" target="_blank">Game: Tic Tac Toe</a>
+      <span class="list-more-info">Built in 2021 &nbsp; | &nbsp; <span class="list-more-info-toggle" title="show">Show details</span></span>
+      <div class="list-more-info-wrapper">
+        <h4>How this game works</h4>
+        <ul class="list-more-info">
+          <li>Each player takes turn to place their marker.</li>
+          <li>If a player gets three of their markers in a row (horizontally, vertically or diagonally) they win.</li>
+          <li>If 9 markers are placed and neither player gets 3 in a row, the game is over.</li>
+        </ul>
+      </div>
+    </li>
+    <li><a href="/prototypes/memory/" target="_blank">Game: Memory</a>
+      <span class="list-more-info">Built in 2021 &nbsp; | &nbsp; <span class="list-more-info-toggle" title="show">Show details</span></span>
+      <div class="list-more-info-wrapper">
+        <h4>How this game works</h4>
+        <ul class="list-more-info">
+          <li>The user selects game difficulty.  Easy has 6 matches.  Medium has 10 matches. Hard has 20 matches.</li>
+          <li>The cards are shuffled.</li>
+          <li>During gameplay, a countdown timer tracks time remaining, clicks are tracked and matches are tracked.</li>
+          <li>When two cards are turned over, they are checked to see if they match.  If they match they stay face up and are no longer selectable.  If they don't match they are turned face down and put back into game rotation.</li>
+          <li>If all cards have been matched within 2 minutes, the user wins.</li>
+          <li>If the countdown reaches 0 and there are still unmatched cards, the game is over.</li>
+        </ul>
+      </div>
+    </li>
+    <li><a href="/prototypes/8-puzzle/" target="_blank">Game: 8 Puzzle</a>
+      <span class="list-more-info">Built in 2021 &nbsp; | &nbsp; <span class="list-more-info-toggle" title="show">Show details</span></span>
+      <div class="list-more-info-wrapper">
+        <h4>How this game works</h4>
+        <ul class="list-more-info">
+          <li>The user selects a puzzle they would like to solve.</li>
+          <li>The selected puzzle pieces are shuffled.</li>
+          <li>A check is performed to ensure that the game is solvable, for a game to be solvable an even number of inversions are required. If the game is not solvable, the cards are reshuffled until a solvable game served up.</li>
+          <li>During gameplay, time elapsed and clicks/moves are tracked. </li>
+          <li>The user attempts to get all puzzle pieces into their correct position. </li>
+          <li>The user is only able to move pieces that are adjacent to the blank cell. </li>
+          <li>If all puzzle pieces are in their correct position, the user wins.</li>
+          <li>If the puzzle is not solved within 60 minutes, the game is over. </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="desktop-col-10 desktop-offset-1 laptop-col-10 laptop-offset-1 tablet-col-12 phone-col-12">
+          <div class="wrapper">
+            <p><a href="/code-challenges/">Code Challenges</a> &nbsp; <br/>Website design and content © 2021 Joanne Walter</p>
+          <!--<p><span class="material-icons">waving_hand</span><br/><strong>Jojo</strong> | Product Designer<br/>Website design and content © 2021 Joanne Walter</p>-->
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,46 @@
+---
+meta:
+  title: "About Jojo"
+  description: "Since 2008 I’ve worked alongside agencies and startups crafting customer-centric experiences as a Web Designer/ Developer and Product Designer"
+  socials:
+    twitter: ""
+    facebook: ""
+
+hero:
+  image: "/resources/img/about.png"
+  width: "max-width-normal"
+  style: "subpage"
+  text: "About Jojo"
+  byline:
+    width: "max-width-normal"
+    emphasis: ""
+    text: "I'm currently working as a Senior Product Designer at JESI where I am helping to improve the safety of remote workers around the world."
+
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+  {{> meta }}
+  {{> head }}
+</head>
+<body>
+{{> header }}
+{{> hero }}
+
+{{> container type='white-bg'}}
+  {{> columns large='8' large_offset='2' medium='12' medium_offset='0' small='12' }}
+    {{> spacer size='70'}}
+    <p></p>
+    {{> spacer size='20' }}
+    <h3>More About Jojo</h3>
+    {{> spacer size='20' }}
+    <ul>
+      <li><a href="/code-challenges/">Code Challenges</a></li>
+      <li><a href="/prototype/">Prototypes</a></li>
+    </ul>
+  {{> columns-footer }}
+{{> container-footer }}
+
+{{> footer }}
+</body>
