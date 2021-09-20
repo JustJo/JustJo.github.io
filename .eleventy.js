@@ -4,8 +4,8 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.setTemplateFormats([
   "hbs",
   "html",
-  "js",
   "png",
+  "wav",
   "css" // css is not yet a recognized template extension in Eleventy
   ]);
   return {

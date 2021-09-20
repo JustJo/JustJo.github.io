@@ -1,0 +1,196 @@
+<html>
+
+<head>
+  <title>Simon Says</title>
+  <meta name="description" content=""/>
+  <meta property="og:image" content=""/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="icon" type="image/png" href="/resources/img/favicon.png"> -->
+
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+
+
+  <script>
+    $(document).ready(function() {
+
+      var level = 1;
+      var $audio = $('audio');
+      var audio = $audio[0];
+      var userTurn = 0;
+      var completedLevel = 0;
+
+
+      function randomizer(){
+        return Math.floor(Math.random() * 4) + 1;
+      }
+
+      function createarray(){
+        simonSays = [];
+        var i = 0;
+        while (i < level) {
+          simonSays.push(randomizer());
+          i++;
+        }
+      }
+
+      function watchSimon(x){
+        var simon = simonSays[x];
+        if (x < level) {
+          //disable buttons
+          $("button").attr("disabled", true);
+          setTimeout(function(){
+            $(".buttons").find("button[value="+ simon +"]").addClass("simon-flash");
+             audio.play();
+          }, 500);
+          setTimeout(function(){
+            $(".buttons").find("button[value="+ simon +"]").removeClass("simon-flash");
+            watchSimon(x + 1);
+          }, 1000);
+        } else {
+          //re-enable buttons
+          $("button").attr("disabled", false);
+          $(".simons-turn").fadeOut(100);
+          setTimeout(function(){
+            $(".your-turn").fadeIn(100);
+          }, 100);
+        }
+      }
+
+      //Start game
+      $(".start-game").click(function() {
+        createarray();
+        $(this).fadeOut();
+        $(".byline").fadeOut();
+        setTimeout(function(){
+          $(".simon-says").show();
+          $(".simons-turn").fadeIn();
+          $(".game-board").fadeIn();
+          $(".level").fadeIn();
+        }, 500);
+        setTimeout(function(){
+          watchSimon(0);
+        }, 1000);
+      });
+
+      //Your Turn Clicks
+      $("button").click(function() {
+        if (userTurn < level){
+          correctAnswer = simonSays[userTurn];
+          var userChoice = $(this).attr("value");
+          $this = $(this);
+          audio.play();
+          $this.addClass("user-flash");
+          setTimeout(function(){
+            $this.removeClass("user-flash");
+          }, 200);
+          if (userChoice != correctAnswer) {  //Incorrect Click
+            if (completedLevel != 1){
+              $(".completed-level").html(completedLevel +" levels");
+            } else {
+              $(".completed-level").html(completedLevel +" level");
+            }
+            $(".your-turn").fadeOut();
+            $(".game-board").fadeOut();
+            $("img.simon-happy").fadeOut();
+            setTimeout(function(){
+              $(".game-over").fadeIn(100);
+              $("img.simon-sad").fadeIn(100);
+              $(".game-over-result").fadeIn(100);
+            }, 500);
+          } else if (userTurn == (level-1)) { //All Clicks Correct
+            $(".current-level").html(level);
+            level++;
+            completedLevel++;
+            $("button").attr("disabled", true);
+            $(".buttons").fadeOut();
+            $(".your-turn").fadeOut();
+            setTimeout(function(){
+              $(".success").fadeIn();
+              $(".next-level").fadeIn();
+            }, 500);
+          }
+          userTurn ++;
+        }
+      });
+
+      //Next Level
+      $(".next-level").click(function() {
+        userTurn = 0;
+        $(".next-level").fadeOut();
+        $(".success").fadeOut();
+        setTimeout(function(){
+          $(".simons-turn").fadeIn();
+          $(".buttons").fadeIn();
+          createarray();
+          watchSimon(0);
+        }, 500);
+      });
+
+
+      //Play Again
+      $(".play-again").click(function() {
+        location.reload();
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+
+<audio controls><source src="sound-1.wav" type="audio/wav"></audio>
+
+<div class="container">
+
+  <div class="header">
+    <div class="simons-face">
+      <img src="simon.png" class="simon-happy"/>
+      <img src="simon-sad.png" class="simon-sad"/>
+    </div>
+    <h1>Simon Says</h1>
+    <div class="simon-says">
+      <h2 class="simons-turn">Watch Me!</h2>
+      <h2 class="your-turn">It's Your Turn!</h2>
+      <h2 class="game-over">Game Over!</h2>
+      <h2 class="success">Level <span class="current-level">1</span> Cleared</h2>
+      <p class="game-over-result">You completed <span class="completed-level"></span> successfully!</p>
+    </div>
+    <p class="byline">Pay attention to the buttons that Simon presses and then repeat the sequence</p>
+    <div class="start-game cta">Start Game</div>
+    <div class="next-level cta">Next Level</div>
+    <div class="play-again cta">Play Again</div>
+  </div>
+
+  <div class="game-board">
+    <div class="buttons">
+    <button value="1" id="btn-1"></button>
+    <button value="2" id="btn-2"></button>
+    <button value="3" id="btn-3"></button>
+    <button value="4" id="btn-4"></button>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">Built by <a href="https://justjo.github.io/">Joanne Walter</a></div>
+
+</body>
+</html>
