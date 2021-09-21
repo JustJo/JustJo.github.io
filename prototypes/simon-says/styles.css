@@ -34,11 +34,10 @@ body {
 .container {
 	max-width: 600px;
 	margin: 0 auto;
-	padding-top: 20px;
-	padding-bottom: 80px;
+	padding-bottom: 44px;
 	display: flex;
 	align-items: center;
-	height: 90%;
+	height: 100%;
 }
 .flex {
 	width: 100%;
@@ -203,8 +202,8 @@ button {
 /*Simon Active*/
 .simon-active {
 	position: fixed;
-	bottom: 80px;
-	right: 20px;
+	bottom: 55px;
+	right: 10px;
 }
 .simon-active img {
 	height: 80px;
