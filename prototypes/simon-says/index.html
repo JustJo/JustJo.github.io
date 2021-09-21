@@ -32,10 +32,10 @@
     $(document).ready(function() {
 
       var level = 1;
-      var $audio = $('audio');
-      var audio = $audio[0];
       var userTurn = 0;
       var completedLevel = 0;
+      var clickBuffer;
+      var play;
 
 
       function randomizer(){
@@ -57,8 +57,8 @@
           //disable buttons
           $("button").attr("disabled", true);
           setTimeout(function(){
+            play(clickBuffer);
             $(".buttons").find("button[value="+ simon +"]").addClass("simon-flash");
-             audio.play();
           }, 500);
           setTimeout(function(){
             $(".buttons").find("button[value="+ simon +"]").removeClass("simon-flash");
@@ -76,10 +76,13 @@
 
       //Start game
       $(".start-game").click(function() {
+        play(clickBuffer);
         createarray();
         $(this).fadeOut();
         $(".byline").fadeOut();
+        $(".header").fadeOut();
         setTimeout(function(){
+          $(".simon-active").fadeIn();
           $(".simon-says").show();
           $(".simons-turn").fadeIn();
           $(".game-board").fadeIn();
@@ -91,12 +94,12 @@
       });
 
       //Your Turn Clicks
-      $("button").click(function() {
+      $(".buttons button").click(function() {
         if (userTurn < level){
           correctAnswer = simonSays[userTurn];
           var userChoice = $(this).attr("value");
           $this = $(this);
-          audio.play();
+          play(clickBuffer);
           $this.addClass("user-flash");
           setTimeout(function(){
             $this.removeClass("user-flash");
@@ -110,10 +113,13 @@
             $(".your-turn").fadeOut();
             $(".game-board").fadeOut();
             $("img.simon-happy").fadeOut();
+            $(".simon-active").fadeOut();
             setTimeout(function(){
+              $(".header").fadeIn();
               $(".game-over").fadeIn(100);
               $("img.simon-sad").fadeIn(100);
               $(".game-over-result").fadeIn(100);
+              $(".play-again").fadeIn(100);
             }, 500);
           } else if (userTurn == (level-1)) { //All Clicks Correct
             $(".current-level").html(level);
@@ -122,7 +128,9 @@
             $("button").attr("disabled", true);
             $(".buttons").fadeOut();
             $(".your-turn").fadeOut();
+            $(".simon-active").fadeOut();
             setTimeout(function(){
+              $(".header").fadeIn();
               $(".success").fadeIn();
               $(".next-level").fadeIn();
             }, 500);
@@ -133,10 +141,13 @@
 
       //Next Level
       $(".next-level").click(function() {
+        play(clickBuffer);
         userTurn = 0;
         $(".next-level").fadeOut();
         $(".success").fadeOut();
+        $(".header").fadeOut();
         setTimeout(function(){
+          $(".simon-active").fadeIn();
           $(".simons-turn").fadeIn();
           $(".buttons").fadeIn();
           createarray();
@@ -147,45 +158,88 @@
 
       //Play Again
       $(".play-again").click(function() {
+        play(clickBuffer);
         location.reload();
       });
 
-    });
+
+      //Audio
+      (function (){
+        // Check if the browser supports web audio. Safari wants a prefix.
+        if ('AudioContext' in window || 'webkitAudioContext' in window) {
+
+          play = function (audioBuffer) {
+            console.log("playing audio");
+            var source = context.createBufferSource();
+            source.buffer = audioBuffer;
+            source.connect(context.destination);
+            source.start();
+          };
+
+          var URL = 'sound-1.wav';
+          var AudioContext = window.AudioContext || window.webkitAudioContext;
+          var context = new AudioContext(); // Make it crossbrowser
+          var gainNode = context.createGain();
+          gainNode.gain.value = 1; // set volume to 100%
+          clickBuffer = void 0;
+
+          // The Promise-based syntax for BaseAudioContext.decodeAudioData() is not supported in Safari(Webkit).
+          window.fetch(URL)
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => context.decodeAudioData(arrayBuffer,
+               audioBuffer => {
+                  clickBuffer = audioBuffer;
+                },
+                error =>
+                  console.error(error)
+              ))
+        }
+      })();
+
+  });
   </script>
 </head>
 
 <body>
 
-<audio controls><source src="sound-1.wav" type="audio/wav"></audio>
+<div class="simon-active">
+  <div class="simon-active-copy">
+    <h2>Simon Says</h2>
+    <h3 class="simons-turn">Watch Me!</h3>
+    <h3 class="your-turn">It's Your Turn!</h3>
+  </div>
+  <img src="simon.png" class="simon-happy"/>
+</div>
 
 <div class="container">
 
-  <div class="header">
-    <div class="simons-face">
-      <img src="simon.png" class="simon-happy"/>
-      <img src="simon-sad.png" class="simon-sad"/>
+  <div class="flex">
+    <div class="header">
+      <div class="simons-face">
+        <img src="simon.png" class="simon-happy"/>
+        <img src="simon-sad.png" class="simon-sad"/>
+      </div>
+      <h1>Simon Says</h1>
+      <div class="simon-says">
+        <h2 class="game-over">Game Over!</h2>
+        <h2 class="success">Level <span class="current-level">1</span> Cleared</h2>
+        <p class="game-over-result">You completed <span class="completed-level"></span> successfully!</p>
+      </div>
+      <p class="byline">Pay attention to the buttons that Simon presses and then repeat the sequence</p>
+      <div class="start-game cta">Start Game</div>
+      <div class="next-level cta">Next Level</div>
+      <div class="play-again cta">Play Again</div>
     </div>
-    <h1>Simon Says</h1>
-    <div class="simon-says">
-      <h2 class="simons-turn">Watch Me!</h2>
-      <h2 class="your-turn">It's Your Turn!</h2>
-      <h2 class="game-over">Game Over!</h2>
-      <h2 class="success">Level <span class="current-level">1</span> Cleared</h2>
-      <p class="game-over-result">You completed <span class="completed-level"></span> successfully!</p>
-    </div>
-    <p class="byline">Pay attention to the buttons that Simon presses and then repeat the sequence</p>
-    <div class="start-game cta">Start Game</div>
-    <div class="next-level cta">Next Level</div>
-    <div class="play-again cta">Play Again</div>
-  </div>
 
-  <div class="game-board">
-    <div class="buttons">
-    <button value="1" id="btn-1"></button>
-    <button value="2" id="btn-2"></button>
-    <button value="3" id="btn-3"></button>
-    <button value="4" id="btn-4"></button>
+    <div class="game-board">
+      <div class="buttons">
+      <button value="1" id="btn-1"></button>
+      <button value="2" id="btn-2"></button>
+      <button value="3" id="btn-3"></button>
+      <button value="4" id="btn-4"></button>
+      </div>
     </div>
+
   </div>
 
 </div>
