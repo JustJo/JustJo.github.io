@@ -1,0 +1,150 @@
+<html>
+
+<head>
+  <title>Jojo - Code Challenge: Guess the Number</title>
+  <meta name="description" content="How many guesses does it take for you to guess the correct number? "/>
+  <meta property="og:image" content="social-tile.png"/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+
+
+  <script>
+    $(document).ready(function() {
+      var guess_count = 1;
+      var guess;
+      var answer;
+
+      $("button#enter_guess").attr("disabled", true);
+
+      $(".difficulty_container button").click(function() {
+        $(".difficulty_container").hide();
+        $(".game_container").show();
+        $("#input_guess").focus();
+      });
+
+      $("#easy").click(function() {
+        answer = Math.floor(Math.random() * 101);
+        $(".upper").html("100");
+      });
+
+      $("#medium").click(function() {
+        answer = Math.floor(Math.random() * 501);
+        $(".upper").html("500");
+      });
+
+      $("#hard").click(function() {
+        answer = Math.floor(Math.random() * 1001);
+        $(".upper").html("1000");
+      });
+
+
+      $("#play_again").click(function() {
+        location.reload();
+      });
+
+
+      $("#input_guess").keyup(function(event) {
+        if (event.keyCode === 13) {
+            compare();
+        }
+        if( $(this).val() ) {
+          $("button#enter_guess").attr("disabled", false);
+        }
+        if( !$(this).val() ) {
+          $("button#enter_guess").attr("disabled", true);
+        }
+
+      });
+
+      $("#enter_guess").click(function() {
+        compare();
+      });
+
+
+      function compare() {
+        var guess = document.getElementById("input_guess").value;
+        if (guess != answer) {
+            $(".guess").html(guess);
+            $(".guess_again").fadeIn();
+            $("input#input_guess").val("");
+            $("button#enter_guess").attr("disabled", true);
+            guess_count ++;
+            $(".guess_count").html(guess_count);
+          if (guess < answer ) {
+            $(".direction").html("higher");
+          } else {
+            $(".direction").html("lower");
+          }
+        } else {
+          $(".game_container").fadeOut(200);
+          setTimeout(function(){
+            $(".winner").fadeIn(200);
+          }, 500);
+          $(".final_guess_count").html(guess_count);
+          if (guess_count > 1){
+            $(".guess_s").html("es");
+          } else {
+            $(".guess_s").html("");
+          }
+        }
+      }
+
+  });
+
+// disable guess button if input is empty
+
+  </script>
+</head>
+
+<body>
+  <div class="container">
+
+
+    <h1>Guess the<br/>Number</h1>
+
+    <div class="difficulty_container">
+      <button class="button" id="easy">Play Easy Mode</button>
+      <button class="button" id="medium">Play Medium Mode</button>
+      <button class="button" id="hard">Play Hard Mode</button>
+    </div>
+
+    <div class="game_container">
+      <h2>I'm thinking of a number between <br/><span class="lower">0 &</span> <span class="upper"></span></h2>
+      <p class="guess_again">Guess again!<br/> The number I'm thinking of is <br/><span class="direction"></span> than <span class="guess"></span></p>
+      <input id="input_guess" type="number" placeholder="Enter your guess" ></input>
+      <button class="button" id="enter_guess">Guess #<span class="guess_count">1</span></button>
+    </div>
+
+    <div class="winner">
+      <h2>Congrats, you guessed right!</h2>
+      <h2>You figured out the correct number with<h2>
+      <h3><span class="final_guess_count"></span> Guess<span class="guess_s"></span></h3>
+      <button class="button" id="play_again">Play Again</button>
+    </div>
+
+
+
+
+    <div class="footer">Built by <a href="https://justjo.github.io/">Joanne Walter</a></div>
+
+  </div>
+</body>
+
+</html>
