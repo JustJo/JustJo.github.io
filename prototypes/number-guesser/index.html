@@ -81,6 +81,7 @@
       function compare() {
         var guess = document.getElementById("input_guess").value;
         if (guess != answer) {
+            $("#input_guess").focus();
             $(".guess").html(guess);
             $(".guess_again").fadeIn();
             $("input#input_guess").val("");
@@ -128,7 +129,7 @@
     <div class="game_container">
       <h2>I'm thinking of a number between <br/><span class="lower">0 &</span> <span class="upper"></span></h2>
       <p class="guess_again">Guess again!<br/> The number I'm thinking of is <br/><span class="direction"></span> than <span class="guess"></span></p>
-      <input id="input_guess" type="number" placeholder="Enter your guess" ></input>
+      <input id="input_guess" type="tel" placeholder="Enter your guess" ></input>
       <button class="button" id="enter_guess">Guess #<span class="guess_count">1</span></button>
     </div>
 
