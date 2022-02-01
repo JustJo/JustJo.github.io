@@ -24,17 +24,208 @@ time, mark, audio, video {
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
 }
-
-
-
-#snakeboard {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+body {
+	color: #000;
+	-webkit-font-smoothing:subpixel-antialiased;
+	font-family: 'Roboto', sans-serif;
+	background: #fff;
+  touch-action: pan-x pan-y;
 }
 
+
+/*Start Game*/
+#game-start-container {
+	background-color:#fff;
+	display: flex;
+	align-items: center;
+  flex-direction: row;
+	padding: 30px 20px;
+	max-width: 460px;
+	margin: 0 auto;
+}
+#game-start {
+	text-align: center;
+	width: 100%;
+}
+#game-start .cta{
+	width: 150px;
+}
+
+#game-start h1 {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 26px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+#game-start h2 {
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	text-align: left;
+}
+#game-start p {
+	font-size: 14px;
+	padding-bottom: 20px;
+	padding-top: 0px;
+}
+#desktop-instructions {
+	display: none;
+}
+#mobile-instructions {
+	display: none;
+}
+.key-detail {
+	padding: 10px 0;
+}
+.key-detail p {
+	font-size: 11px !important;
+	text-align: left;
+}
+.key-detail p strong {
+	font-weight: 700;
+	font-size: 12px;
+}
+.edible {
+	display: block;
+	height: 30px;
+	width: 30px;
+	margin-right: 10px;
+	float: left;
+	clear: both;
+	margin-bottom: 30px;
+}
+#food {
+	background: #53C16E;
+}
+#poison {
+	background: #FE5B5B;
+}
+#accelerant {
+	background: #FFBE57;
+}
+#reversal {
+	background: #6E7CFF;
+}
+
+
+
+
+#container {
+	padding: 10px 20px;
+	margin: 0 auto;
+	width: 480px;
+	display: none;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+#game-board {
+	position: relative;
+}
+
+
+/*Game Over*/
+#game-over-container {
+	background-color:rgba(255, 255, 255, 0.8);
+	backdrop-filter: blur(2px);
+	padding: 0;
+	position: absolute;
+	top: 0;
+	display: none;
+	align-items: center;
+  flex-direction: row;
+}
+#game-over {
+	text-align: center;
+	width: 100%;
+}
+
+#game-over h3 {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 26px;
+	padding-bottom: 10px;
+}
+
+button.cta {
+	display: block;
+	width: 100px;
+	margin: 0 auto;
+	padding: 10px 5px;
+	font-size: 14px;
+	background: #8A5FFE;
+	border-radius: 5px;
+	border: none;
+	color: #fff;
+}
+
+button.cta:hover{
+	background: #6232E5;
+	cursor: pointer;
+}
+
+
+#header {
+ height: 70px;
+	display: flex;
+ align-items: center;
+ flex-direction: row;
+}
+
+#logo {
+	width: 50%;
+}
+
+#score-container{
+	text-align: right;
+	text-transform: uppercase;
+	font-size: 12px;
+	vertical-align: middle;
+	width: 50%;
+}
 #score {
-        text-align: center;
-        font-size: 100px;
-      }
+	font-size: 18px;
+	font-weight: bold;
+}
+
+#buttons {
+	display: none;
+	padding: 10px 0;
+	height: 70px;
+}
+
+
+#buttons .button {
+	height: 60px;
+	width: 60px;
+	font-size: 14px;
+	color: #000;
+		margin: 0 5px;
+}
+
+.y-axis {
+	float: left;
+}
+
+.x-axis {
+	float: right;
+}
+
+
+
+#footer {
+	clear: both;
+	padding: 0px 0 30px 0;
+	text-align: center;
+	font-size: 12px;
+	line-height: 18px;
+	height: 70px;
+}
+#footer a {
+	color: #000;
+}
+#footer a:hover {
+	color: #555;
+}
