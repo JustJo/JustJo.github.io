@@ -1,0 +1,634 @@
+
+<html>
+
+<head>
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="https://fonts.googleapis.com/css2?family=Faster+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<div id="game-start-container">
+  <div id="game-start">
+    <img src="images/snake.png" width="60">
+    <h1>~ SNAKE ~</h1>
+    <p id="desktop-instructions">Use the up/down/left/right arrows on your keyboard to move the snake. Game ends when snake runs into a wall, or runs into itself.</p>
+    <p id="mobile-instructions">Use the up/down/left/right buttons to move the snake. Game ends when snake runs into a wall, or runs into itself.</p>
+    <button type="button" id="startGame" class="cta">Start Game</button>
+
+    <div id="key">
+      <h2>Game Key:</h2>
+      <div class="key-detail">
+        <div class="edible" id="food"></div>
+        <p><strong>Food</strong><br/>Eat this to grow snake by 1 square, score increases by 10 points.</p>
+      </div>
+      <div class="key-detail">
+        <div class="edible" id="accelerant"></div>
+        <p><strong>Accelerate</strong><br/>Eat this to grow snake by 1 square and double snake speed for 15 seconds. During that time, points are doubled.</p>
+      </div>
+      <div class="key-detail">
+        <div class="edible" id="reversal"></div>
+        <p><strong>Reverse</strong><br/>Eat this to grow snake by 1 square and to reverse your controls (up goes down, left goes right, etc).  Reversal ends once another reversal is eaten.  During reversal, points are doubled.</p>
+      </div>
+      <div class="key-detail">
+        <div class="edible" id="poison"></div>
+        <p><strong>Poison</strong><br/>Eat this and your snake length will decrease by 1 square,  score decreases by 10 points</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div id="container">
+  <div id="header">
+    <div id="logo"><img src="images/snake.png" width="40"></div>
+    <div id="score-container">Score <div id="score">0</div></div>
+  </div>
+
+  <div id="game-board">
+    <canvas id="snakeboard"></canvas>
+    <div id="game-over-container">
+      <div id="game-over">
+        <h3>Game Over</h3>
+        <button type="button" id="restartGame" class="cta">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="buttons">
+    <div class="y-axis">
+      <button type="button" id="clickUp" class="button material-icons-round">north</button>
+      <button type="button" id="clickDown" class="button material-icons-round">south</button>
+    </div>
+    <div class="x-axis">
+      <button type="button" id="clickLeft" class="button material-icons-round">west</button>
+      <button type="button" id="clickRight" class="button material-icons-round">east</button>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  Built by <a href="https://justjo.github.io/">Joanne Walter</a><br/>
+  Game was built using this <a href="https://www.educative.io/blog/javascript-snake-game-tutorial">tutorial</a>
+</div>
+
+</body>
+
+<script>
+
+
+
+
+
+const board_border = 'black';
+const board_background = 'white';
+const snake_col = "83, 193, 110";
+const grid = 60;
+const buffer = 50;
+
+
+let snake = [
+  {x: 50, y: 40},
+  {x: 40, y: 40},
+  {x: 30, y: 40},
+  {x: 20, y: 40},
+  {x: 10, y: 40}
+]
+
+
+
+
+//True if changing change_direction
+let changing_direction = false;
+
+let attempt = 5;
+let speed = 100;
+let speed_increase = false;
+let flip_controls = false;
+let score = 0;
+let score_modifier = 10;
+
+//Remove
+let poison_remove = false;
+let accelerant_remove = false;
+let reversal_remove = false;
+
+//Attempts
+let poison_attempt = 0;
+let accelerant_attempt = 0;
+let reversal_attempt = 0;
+
+//buffer
+let buffer_x;
+let buffer_y;
+
+//Food
+let food_x;
+let food_y;
+
+//Poison
+let poison_x;
+let poison_y;
+
+//Accelerant
+let accelerant_x;
+let accelerant_y;
+
+//Reversal
+let reversal_x;
+let reversal_y;
+
+// Horizontal velocity
+let dx = 10;
+
+// Vertical velocity
+let dy = 0;
+
+
+// Get the canvas element
+const snakeboard = document.getElementById("snakeboard");
+
+// Return a two dimensional drawing context
+const snakeboard_ctx = snakeboard.getContext("2d");
+
+
+
+var frame_height = window.innerHeight;
+var frame_width = window.innerWidth;
+frame_height = (Math.round(frame_height/10)*10) - 10;
+frame_width = (Math.round(frame_width/10)*10) - 10;
+
+
+//Check if device is mobile or not
+if (isMobile() == true){
+  document.getElementById("mobile-instructions").style.display = "block";
+  //document.getElementById("header").style.display = "none";
+  document.getElementById("buttons").style.display = "block";
+  document.getElementById("footer").style.display = "none";
+  document.getElementById("container").style.width = frame_width +"px";
+  var header_footer_height = 160;
+
+} else {
+  document.getElementById("desktop-instructions").style.display = "block";
+  var header_footer_height = 160;
+  /*stuff to move to mobile*/
+}
+function isMobile() {
+  var check = false;
+  (function(a){
+    if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))
+      check = true;
+  })(navigator.userAgent||navigator.vendor||window.opera);
+  return check;
+};
+
+
+
+
+document.addEventListener("keydown", change_direction);
+document.getElementById("clickUp").addEventListener("click", change_direction);
+document.getElementById("clickDown").addEventListener("click", change_direction);
+document.getElementById("clickLeft").addEventListener("click", change_direction);
+document.getElementById("clickRight").addEventListener("click", change_direction);
+document.getElementById("startGame").addEventListener("click", start_game);
+document.getElementById("restartGame").addEventListener("click", restart_game);
+
+
+function restart_game(){
+  location.reload();
+}
+
+
+function start_game(){
+  document.getElementById("game-start-container").style.display = "none";
+  document.getElementById("container").style.display = "block";
+  clearCanvas();
+  gen_food();
+  gen_poison();
+  gen_accelerant();
+  gen_reversal();
+  gen_check();
+  main();
+}
+
+function end_game(){
+  document.getElementById("game-over-container").style.display = "flex";
+  document.getElementById("game-over-container").style.height = frame_height - header_footer_height +"px";
+  document.getElementById("game-over-container").style.width = frame_width - 20 +"px";
+}
+
+
+function main(){
+  changing_direction = false;
+  //check if game has ended;
+  if (has_game_ended() == true){
+    end_game();
+  } else {
+    setTimeout(function onTick() {
+      if (snake.length == 0 ){
+        return
+      }
+      clearCanvas();
+      drawSnake();
+      drawPoison();
+      drawAccelerant();
+      drawReversal();
+      drawFood();
+      drawBuffer();
+      move_snake();
+      main();
+    }, speed)
+  }
+}
+
+
+
+// Draw a border around the canvas
+function clearCanvas() {
+  if (frame_width >= 500){
+    frame_width = 480;
+  }
+  if ((frame_height >=500) && (isMobile() == false)){
+    frame_height = 480;
+  }
+
+
+  snakeboard_ctx.canvas.width  = frame_width - 40;
+  snakeboard_ctx.canvas.height = frame_height - header_footer_height;
+
+  snakeboard_ctx.fillStyle = board_background;
+  snakeboard_ctx.strokeStyle = board_border;
+  snakeboard_ctx.fillRect(0, 0, snakeboard.width, snakeboard.height);
+  snakeboard_ctx.strokeRect(0, 0, snakeboard.width, snakeboard.height);
+}
+
+function drawFood() {
+  snakeboard_ctx.fillStyle = '#53C16E';
+  snakeboard_ctx.fillRect(food_x, food_y, 10, 10);
+}
+
+function drawPoison() {
+  snakeboard_ctx.fillStyle = '#FE5B5B';
+  snakeboard_ctx.fillRect(poison_x, poison_y, 10, 10);
+}
+
+function drawAccelerant() {
+  snakeboard_ctx.fillStyle = '#FFBE57';
+  snakeboard_ctx.fillRect(accelerant_x, accelerant_y, 10, 10);
+}
+
+function drawReversal() {
+  snakeboard_ctx.fillStyle = '#6E7CFF';
+  snakeboard_ctx.fillRect(reversal_x, reversal_y, 10, 10);
+}
+
+function drawBuffer() {
+  snakeboard_ctx.fillStyle = 'rgba(255, 165, 0, 0)';
+  snakeboard_ctx.fillRect(snake[0].x-grid, snake[0].y-grid, grid*2, grid*2);
+}
+
+// Draw the snake on the canvas
+function drawSnake() {
+  for(let i = 0; i < snake.length; i++){
+    drawSnakePart(snake[i], i, snake.length);
+  }
+}
+
+// Draw one snake part
+function drawSnakePart(snakePart, i, snakelength) {
+  opacity = ((80)/snakelength)/100 * (snakelength - i);
+  snakeboard_ctx.fillStyle = "rgba("+snake_col+ ","+ (0.2 + opacity) +")";
+  snakeboard_ctx.fillRect(snakePart.x, snakePart.y, 10, 10);
+}
+
+function random_number(min, max) {
+  return Math.round((Math.random() * (max-min) + min) / 10) * 10;
+}
+
+function gen_food() {
+  food_x = random_number(0, snakeboard.width - 10);
+  food_y = random_number(0, snakeboard.height - 10);
+  gen_check();
+}
+
+function gen_poison() {
+  if (poison_remove == false){
+    poison_x = random_number(0, snakeboard.width - 10);
+    poison_y = random_number(0, snakeboard.height - 10);
+    poison_attempt = poison_attempt+1;
+    console.log("Poison: "+poison_attempt);
+    gen_check();
+  } else {
+    poison_x = -100;
+    poison_y = -100;
+  }
+}
+
+function gen_accelerant() {
+  if (accelerant_remove == false && speed_increase == false){
+    accelerant_x = random_number(0, snakeboard.width - 10);
+    accelerant_y = random_number(0, snakeboard.height - 10);
+    accelerant_attempt = accelerant_attempt+1;
+    console.log("Accelerant: "+accelerant_attempt);
+    gen_check();
+  } else {
+    accelerant_x = -100;
+    accelerant_y = -100;
+  }
+}
+
+function gen_reversal() {
+  if (reversal_remove == false){
+    reversal_x = random_number(0, snakeboard.width - 10);
+    reversal_y = random_number(0, snakeboard.height - 10);
+    reversal_attempt = reversal_attempt+1 ;
+    console.log("Reversal: "+ reversal_attempt);
+    gen_check();
+  } else {
+    reversal_x = -100;
+    reversal_y = -100;
+  }
+}
+
+function gen_check(){
+  var myEdibleArray = ["food","poison","accelerant","reversal"];
+  var arrayLength = myEdibleArray.length;
+  for (var i = 0; i < arrayLength; i++) {
+    check = (myEdibleArray[i])
+    check_x = (myEdibleArray[i])+"_x";
+    check_y = (myEdibleArray[i])+"_y";
+    check_x_value = eval(check_x);
+    check_y_value = eval(check_y);
+
+
+    //If EDIBLE is where SNAKE is, DROP
+    snake.forEach(function (part) {
+      if ((part.x == check_x_value) && (part.y == check_y_value)){
+        if (check == "food"){
+          // if FOOD is where SNAKE is, REGENERATE FOOD
+          gen_food();
+        } else {
+          if (check == "poison" && poison_attempt >= attempt){
+            poison_remove=true;
+            //console.log(check +" dropped - snake overlap");
+          }
+          if (check == "accelerant" && accelerant_attempt >= attempt){
+            accelerant_remove=true;
+            //console.log(check +" dropped - snake overlap");
+          }
+          if (check == "reversal" && reversal_attempt >= attempt){
+            reversal_remove=true;
+            //console.log(check +" dropped - snake overlap");
+          }
+          eval("gen_"+check)();
+        }
+      }
+    });
+
+    //If EDIBLE is where FOOD is, DROP
+    if (check != "food"){
+      if ((check_x_value == food_x) && (check_y_value == food_y)){
+        if (check == "poison" && poison_attempt >= attempt){
+          poison_remove=true;
+          //console.log(check +" dropped - food overlap");
+        }
+        if (check == "accelerant" && accelerant_attempt >= attempt){
+          accelerant_remove=true;
+          //console.log(check +" dropped - food overlap");
+        }
+        if (check == "reversal" && reversal_attempt >= attempt){
+          reversal_remove=true;
+          //console.log(check +" dropped - food overlap");
+        }
+        eval("gen_"+check)();
+      }
+    }
+
+    //If EDIBLE is where POISON is, drop
+    if ((check != "food") && (check != "poison")){
+      if ((check_x_value == poison_x) && (check_y_value == poison_y)){
+        if (check == "poison" && poison_attempt >= attempt ){
+          poison_remove=true;
+          //console.log(check +" dropped - poison overlap");
+        }
+        if (check == "accelerant" && accelerant_attempt >= attempt){
+          accelerant_remove=true;
+          //console.log(check +" dropped - poison overlap");
+        }
+        if (check == "reversal" && reversal_attempt >= attempt){
+          reversal_remove=true;
+          //console.log(check +" dropped - poison overlap");
+        }
+        eval("gen_"+check)();
+      }
+    }
+
+    //If EDIBLE is where ACCELERANT is, DROP
+    if ((check != "food") && (check != "accelerant")){
+      if ((check_x_value == accelerant_x) && (check_y_value == accelerant_y)){
+        if (check == "poison" && poison_attempt >= attempt){
+          poison_remove=true;
+          //console.log(check +" dropped - accelerant overlap");
+        }
+        if (check == "reversal" && reversal_attempt >= attempt){
+          reversal_remove=true;
+          //console.log(check +" dropped - accelerant overlap");
+        }
+        eval("gen_"+check)();
+      }
+    }
+
+    //If EDIBLE is where REVERSAL is, DROP
+    if ((check != "food") && (check != "reversal")){
+      if ((check_x_value == reversal_x) && (check_y_value == reversal_y)){
+        if (check == "poison" && poison_attempt >= attempt){
+          poison_remove=true;
+          //console.log(check +" dropped - reversal overlap");
+        }
+        if (check == "accelerant" && accelerant_attempt >= attempt){
+          accelerant_remove=true;
+          //console.log(check +" dropped - reversal overlap");
+        }
+        eval("gen_"+check)();
+      }
+    }
+
+    //If EDIBLE has a BUFFER of less than  50 from SNAKE head, DROP
+    if (check != "food"){
+      if (((check_x_value => snake[0].x-buffer) && (check_x_value  <= snake[0].x+buffer)) && ((check_y_value => snake[0].y-buffer) && (check_y_value <= snake[0].y+buffer))){
+        if (check == "poison" && poison_attempt >= attempt){
+          poison_remove=true;
+          //console.log(check +" dropped - to close to snake head.");
+        }
+        if (check == "accelerant" && accelerant_attempt >= attempt){
+          accelerant_remove=true;
+          //console.log(check +" dropped - to close to snake head.");
+        }
+        if (check == "reversal" && reversal_attempt >= attempt){
+          reversal_remove=true;
+          //console.log(check +" dropped - to close to snake head.");
+        }
+        eval("gen_"+check)();
+      }
+    }
+
+  }
+}
+
+function change_direction(event){
+  const LEFT_KEY = 37;
+  const RIGHT_KEY = 39;
+  const UP_KEY = 38;
+  const DOWN_KEY = 40;
+
+  //Prevent the snake from reversing
+  if (changing_direction) return;
+  changing_direction = true;
+  const keyPressed = event.keyCode;
+  const buttonClicked = event.target.id;
+  //console.log(keyPressed);
+  //console.log(buttonClicked);
+
+  const isGoingUp = (dy === -10);
+  const isGoingDown = (dy === 10);
+  const isGoingRight = (dx === 10);
+  const isGoingLeft = (dx === -10);
+
+
+  if ((keyPressed === RIGHT_KEY || buttonClicked == "clickRight") && (!isGoingLeft && !isGoingRight)) {
+    if (flip_controls == false){
+      dx = 10;
+      dy = 0;
+    } else {
+      dx = -10;
+      dy = 0;
+    }
+  }
+  if ((keyPressed === LEFT_KEY || buttonClicked == "clickLeft") && (!isGoingRight && !isGoingLeft)) {
+    if (flip_controls == false){
+      dx = -10;
+      dy = 0;
+    } else {
+      dx = 10;
+      dy = 0;
+    }
+  }
+  if ((keyPressed === DOWN_KEY || buttonClicked == "clickDown") && (!isGoingUp && !isGoingDown)) {
+    if (flip_controls == false){
+      dx = 0;
+      dy = 10;
+    } else {
+      dx = 0;
+      dy = -10;
+    }
+  }
+  if ((keyPressed === UP_KEY || buttonClicked == "clickUp") && (!isGoingDown && !isGoingUp)) {
+    if (flip_controls == false) {
+      dx = 0;
+      dy = -10;
+    } else {
+      dx = 0;
+      dy = 10;
+    }
+  }
+}
+
+function actions(){
+  poison_remove = false;
+  accelerant_remove = false;
+  reversal_remove = false;
+
+  poison_attempt = 0;
+  accelerant_attempt = 0;
+  reversal_attempt = 0;
+
+  if (snake.length == 0){
+    end_game();
+    return
+  }
+
+  gen_food();
+  gen_poison();
+  gen_accelerant();
+  gen_reversal();
+  gen_check();
+}
+
+function move_snake() {
+  // Create the new Snake's head
+  const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+  // Add the new head to the beginning of snake body
+  snake.unshift(head);
+  const has_eaten_food = snake[0].x === food_x && snake[0].y === food_y;
+  const has_eaten_poison = snake[0].x === poison_x && snake[0].y === poison_y;
+  const has_eaten_accelerant = snake[0].x === accelerant_x && snake[0].y === accelerant_y;
+  const has_eaten_reversal = snake[0].x === reversal_x && snake[0].y === reversal_y;
+
+  if (has_eaten_food) {
+    score = score + score_modifier;
+    document.getElementById('score').innerHTML = score;
+    console.log("score:" + score);
+    actions();
+  } else if (has_eaten_poison){
+    score = score - score_modifier;
+    document.getElementById('score').innerHTML = score;
+    snake.pop();
+    snake.pop();
+    actions();
+  } else if (has_eaten_accelerant){
+    score_modifier = 20;
+    score = score + score_modifier;
+    document.getElementById('score').innerHTML = score;
+    speed_increase = true;
+    speed = 50;
+    setTimeout(
+      function() {
+      speed=100;
+      speed_increase = false;
+      score_modifier = 10;
+    }, 5000);
+    actions();
+  } else if (has_eaten_reversal){
+    if (flip_controls == false){
+      flip_controls = true;
+      score_modifier = 20;
+    } else {
+      flip_controls = false;
+      score_modifier = 10;
+    }
+    score = score + score_modifier;
+    document.getElementById('score').innerHTML = score;
+    actions();
+  }  else {
+    // Remove the last part of snake body
+    snake.pop();
+  }
+}
+
+function has_game_ended() {
+  if (snake.length == 0) {
+    return;
+  }
+  for (let i = 4; i < snake.length; i++) {
+    if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) return true
+  }
+  const hitLeftWall = snake[0].x < 0;
+  const hitRightWall = snake[0].x > snakeboard.width - 10;
+  const hitTopWall = snake[0].y < 0;
+  const hitBottomWall = snake[0].y > snakeboard.height - 10;
+  return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
+}
+
+</script>
+
+</html>
