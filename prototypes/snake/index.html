@@ -3,11 +3,24 @@
 
 <head>
   <title>Snake Game</title>
+  <meta name="description" content="Snake - Match all the pairs in this classic game."/>
+  <meta property="og:image" content="social-tile.png"/>
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link href="https://fonts.googleapis.com/css2?family=Faster+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
 
 </head>
 
@@ -26,19 +39,19 @@
       <h2>Game Key:</h2>
       <div class="key-detail">
         <div class="edible" id="food"></div>
-        <p><strong>Food</strong><br/>Eat this to grow snake by 1 square, score increases by 10 points.</p>
+        <p><strong>Food</strong><br/>Eat a food square to grow the snake, score increases by 10 points.</p>
       </div>
       <div class="key-detail">
         <div class="edible" id="accelerant"></div>
-        <p><strong>Accelerate</strong><br/>Eat this to grow snake by 1 square and double snake speed for 15 seconds. During that time, points are doubled.</p>
+        <p><strong>Accelerate</strong><br/>Things moving to slow? Eat an accelerate square to grow snake and double snake speed for 15 seconds. During that time, points are doubled.</p>
       </div>
       <div class="key-detail">
         <div class="edible" id="reversal"></div>
-        <p><strong>Reverse</strong><br/>Eat this to grow snake by 1 square and to reverse your controls (up goes down, left goes right, etc).  Reversal ends once another reversal is eaten.  During reversal, points are doubled.</p>
+        <p><strong>Reverse</strong><br/>Up for a challenge! Eat a reverse sqaure to grow snake and to reverse your controls (up goes down, left goes right, etc).  Reversal ends once another reversal square is eaten.  During reversal, points are doubled.</p>
       </div>
       <div class="key-detail">
         <div class="edible" id="poison"></div>
-        <p><strong>Poison</strong><br/>Eat this and your snake length will decrease by 1 square,  score decreases by 10 points</p>
+        <p><strong>Poison</strong><br/>Beware! Eating poison will shrink the snake, score decreases by 10 points</p>
       </div>
     </div>
   </div>
@@ -79,7 +92,7 @@
 
 <div id="footer">
   Built by <a href="https://justjo.github.io/">Joanne Walter</a><br/>
-  Game was built using this <a href="https://www.educative.io/blog/javascript-snake-game-tutorial">tutorial</a>
+  Game was built using this <a href="https://www.educative.io/blog/javascript-snake-game-tutorial" target="_blank">tutorial</a>
 </div>
 
 </body>
@@ -596,7 +609,7 @@ function move_snake() {
       speed=100;
       speed_increase = false;
       score_modifier = 10;
-    }, 5000);
+    }, 15000);
     actions();
   } else if (has_eaten_reversal){
     if (flip_controls == false){

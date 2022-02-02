@@ -68,6 +68,7 @@ body {
 }
 #game-start p {
 	font-size: 14px;
+	line-height: 20px;
 	padding-bottom: 20px;
 	padding-top: 0px;
 }
@@ -81,12 +82,13 @@ body {
 	padding: 10px 0;
 }
 .key-detail p {
-	font-size: 11px !important;
+	font-size: 12px !important;
 	text-align: left;
+	line-height: 16px;
 }
 .key-detail p strong {
 	font-weight: 700;
-	font-size: 12px;
+	font-size: 14px;
 }
 .edible {
 	display: block;
@@ -95,7 +97,7 @@ body {
 	margin-right: 10px;
 	float: left;
 	clear: both;
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 }
 #food {
 	background: #53C16E;
