@@ -183,9 +183,7 @@ frame_width = (Math.round(frame_width/10)*10) - 10;
 //Check if device is mobile or not
 if (isMobile() == true){
   document.getElementById("mobile-instructions").style.display = "block";
-  //document.getElementById("header").style.display = "none";
   document.getElementById("buttons").style.display = "block";
-  document.getElementById("footer").style.display = "none";
   document.getElementById("container").style.width = frame_width +"px";
   var header_footer_height = 160;
 
@@ -221,6 +219,9 @@ function restart_game(){
 
 
 function start_game(){
+  if (isMobile() == true){
+    document.getElementById("footer").style.display = "none";
+  }
   document.getElementById("game-start-container").style.display = "none";
   document.getElementById("container").style.display = "block";
   clearCanvas();
