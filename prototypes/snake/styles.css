@@ -81,6 +81,9 @@ body {
 .key-detail {
 	padding: 10px 0;
 }
+#key h2 {
+	padding-top: 30px;
+}
 .key-detail p {
 	font-size: 12px !important;
 	text-align: left;
