@@ -338,7 +338,7 @@ function gen_poison() {
     poison_x = random_number(0, snakeboard.width - 10);
     poison_y = random_number(0, snakeboard.height - 10);
     poison_attempt = poison_attempt+1;
-    console.log("Poison: "+poison_attempt);
+    //console.log("Poison: "+poison_attempt);
     gen_check();
   } else {
     poison_x = -100;
@@ -351,7 +351,7 @@ function gen_accelerant() {
     accelerant_x = random_number(0, snakeboard.width - 10);
     accelerant_y = random_number(0, snakeboard.height - 10);
     accelerant_attempt = accelerant_attempt+1;
-    console.log("Accelerant: "+accelerant_attempt);
+    //console.log("Accelerant: "+accelerant_attempt);
     gen_check();
   } else {
     accelerant_x = -100;
@@ -364,7 +364,7 @@ function gen_reversal() {
     reversal_x = random_number(0, snakeboard.width - 10);
     reversal_y = random_number(0, snakeboard.height - 10);
     reversal_attempt = reversal_attempt+1 ;
-    console.log("Reversal: "+ reversal_attempt);
+    //console.log("Reversal: "+ reversal_attempt);
     gen_check();
   } else {
     reversal_x = -100;
@@ -589,7 +589,7 @@ function move_snake() {
   if (has_eaten_food) {
     score = score + score_modifier;
     document.getElementById('score').innerHTML = score;
-    console.log("score:" + score);
+    //console.log("score:" + score);
     actions();
   } else if (has_eaten_poison){
     score = score - score_modifier;
