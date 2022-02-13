@@ -20,8 +20,6 @@
     gtag('config', 'UA-177368151-1');
   </script>
   <!--END GA-->
-
-
 </head>
 
 
@@ -151,11 +149,12 @@
     </div>
   </div>
 
-
 </body>
 
 <script>
 
+
+// grow game board based on screen height (resize)
 
 
 //Generate Word
@@ -171,10 +170,34 @@ var tile = 0;
 var attempt = 1;
 var letterTile = 0;
 var guessLetterArray = [];
+var keyboard = "enabled";
+var containerHeight = 0;
+var letterHeight = 0;
+
+containerHeights();
+
+window.addEventListener('resize', function(event) {
+    containerHeights();
+}, true);
+
+
+function containerHeights(){
+  containerHeight = window.innerHeight;
+  containerHeight = containerHeight - 230;
+  document.getElementById("container").style.height = containerHeight+"px";
+  let letterContainer = document.querySelector('.letter');
+  letterHeight = (letterContainer).offsetHeight;
+  var letterElements = document.getElementsByClassName("letter");
+  for (i = 0; i < letterElements.length; i++){
+    letterElements[i].style.lineHeight = letterHeight+"px";
+  }
+}
+
 
 
 //Watch for keyboard input
-document.addEventListener("keyup", keyboardInput);
+document.addEventListener("keydown", keyboardInput);
+
 
 
 //Enter or remove a letter into a letter tile
@@ -187,7 +210,7 @@ function enterLetter(character){
       document.getElementById("attempt-"+attempt+"-letter-"+letterTile).innerHTML = character;
     }
   } else {
-    if (letterTile != 0){
+    if ((letterTile != 0) && (keyboard != "disabled")){
     guessLetterArray.pop();
     document.getElementById("attempt-"+attempt+"-letter-"+letterTile).innerHTML = "";
      letterTile = letterTile - 1;
@@ -198,16 +221,20 @@ function enterLetter(character){
 
 //Get letter or action from keyboard input
 function keyboardInput(character){
-  var charCode = character.keyCode;
-  if ((charCode >= 65) && (charCode <= 90)){
-    var charStr = String.fromCharCode(charCode);
-    enterLetter(charStr);
-  }
-  if (charCode == 13){
-    enter();
-  }
-  if (charCode == 8){
-    enterLetter("DELETE");
+  if (keyboard == "enabled"){
+    var charCode = character.keyCode;
+    if ((charCode >= 65) && (charCode <= 90)){
+      var charStr = String.fromCharCode(charCode);
+      enterLetter(charStr);
+    }
+    if (charCode == 13){
+      enter();
+    }
+    if (charCode == 8){
+      enterLetter("DELETE");
+    }
+  } else {
+
   }
 }
 
@@ -215,10 +242,21 @@ function keyboardInput(character){
 //Enter button clicked, or enter key clicked
 function enter(){
   if (letterTile == 5){
+    disableKeyboard();
     checkWord();
   } else {
     showAlert1();
   }
+}
+
+
+//Disable keyboard
+function disableKeyboard(){
+ keyboard = "disabled";
+}
+//Enable keyboard
+function enableKeyboard(){
+ keyboard = "enabled";
 }
 
 
@@ -229,10 +267,6 @@ function checkWord(){
   fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+guessString)
     .then(response => response.json())
     .then(data => {
-      // console.log(data[0]);
-      // console.log(data[0]);
-      // console.log(data[0].word);
-      //console.log("data length: "+ data.length);
       if ((data.length > 0)){
         realWord = true;
         checkLetters();
@@ -240,6 +274,7 @@ function checkWord(){
       else {
         realWord = false;
         showAlert2();
+        enableKeyboard();
       }
   });
 }
@@ -285,6 +320,7 @@ function checkLetters(){
         letterTile = 0;
         tile = 0;
         guessLetterArray = [];
+        enableKeyboard();
       }
     }, 1500)
 
