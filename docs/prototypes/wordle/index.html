@@ -226,13 +226,14 @@ function enter(){
 function checkWord(){
   var realWord = false;
   var guessString = guessLetterArray.join("").toLowerCase();
-  fetch('https://api.datamuse.com/words?sp='+guessString)
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+guessString)
     .then(response => response.json())
     .then(data => {
-      //console.log(data);
-      //console.log(data[0]);
-      //console.log(data[0].word);
-      if ((data.length > 0) && (guessString == data[0].word)){
+      // console.log(data[0]);
+      // console.log(data[0]);
+      // console.log(data[0].word);
+      //console.log("data length: "+ data.length);
+      if ((data.length > 0)){
         realWord = true;
         checkLetters();
       }
