@@ -8,7 +8,20 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
   <script src="words.js"></script>
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+
+
 </head>
 
 
@@ -216,9 +229,9 @@ function checkWord(){
   fetch('https://api.datamuse.com/words?sp='+guessString)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
-      console.log(data[0]);
-      console.log(data[0].word);
+      //console.log(data);
+      //console.log(data[0]);
+      //console.log(data[0].word);
       if ((data.length > 0) && (guessString == data[0].word)){
         realWord = true;
         checkLetters();
@@ -324,8 +337,6 @@ function showAlert2(){
   document.getElementById("alert-2").classList.remove("hide");
   setTimeout(hideAlert, 1500);
 }
-
-
 
 function restartGame(){
   location.reload();
