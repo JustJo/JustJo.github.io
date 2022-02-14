@@ -184,7 +184,11 @@ window.addEventListener('resize', function(event) {
 function containerHeights(){
   containerHeight = window.innerHeight;
   containerHeight = containerHeight - 230;
-  document.getElementById("container").style.height = containerHeight+"px";
+  if (containerHeight < 420){
+    document.getElementById("container").style.height = containerHeight+"px";
+  } else {
+    document.getElementById("container").style.height = "420px";
+  }
   let letterContainer = document.querySelector('.letter');
   letterHeight = (letterContainer).offsetHeight;
   var letterElements = document.getElementsByClassName("letter");
