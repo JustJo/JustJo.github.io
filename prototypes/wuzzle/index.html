@@ -1,0 +1,394 @@
+<html>
+<head>
+  <title>Wuzzle</title>
+  <meta name="description" content="Try and guess the word!"/>
+  <meta property="og:image" content="social-tile.png"/>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+  <script src="words.js"></script>
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+</head>
+
+
+<body>
+
+  <!--Header-->
+  <div id="header">
+    <h1>Wuzzle</h1>
+    <div class="info-link" onclick="infoModal()">
+      <span class="material-icons-round">info</span>
+    </div>
+  </div>
+
+
+  <!--Alerts-->
+  <div class="alert hide" id="alert-1">Not enough letters</div>
+  <div class="alert hide" id="alert-2">Invalid word</div>
+
+
+  <!--Modals-->
+  <div id="overlay" class="hide"></div>
+
+  <div class="modal hide" id="alert-win">
+    <h2>You won with</h2>
+    <p class="guesses"><span id="guess-attempts"></span> <span id="attempt-plural"></span></strong></p>
+    <p class="byline">Don't be limited by one challenge a day! Play a new game with a new word to guess now!</p>
+    <button type="button" id="restartGame" class="cta" onclick="restartGame()">Play Again</button>
+  </div>
+
+  <div class="modal hide" id="alert-lose">
+    <h2>The word you were looking for was</h2>
+    <p id="correct-answer-was"></p>
+    <p class="byline">Don't be limited by one challenge a day! Play a new game with a new word to guess now!</p>
+    <button type="button" id="restartGame" class="cta" onclick="restartGame()">Play New Game</button>
+  </div>
+
+  <div class="modal hide" id="info-modal">
+    <p>Wuzzle was inspired by <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">Wordle</a> and was built by <a href="https://justjo.github.io/">Joanne Walter</a> for educational purposes.</p>
+    <button type="button" id="back" class="cta" onclick="backToGame()">Back to Game</button>
+  </div>
+
+
+  <!--Game Board-->
+  <div id="container">
+    <div class="letters" id="attempt-1">
+      <div id="attempt-1-letter-1" class="letter"></div>
+      <div id="attempt-1-letter-2" class="letter"></div>
+      <div id="attempt-1-letter-3" class="letter"></div>
+      <div id="attempt-1-letter-4" class="letter"></div>
+      <div id="attempt-1-letter-5" class="letter"></div>
+    </div>
+    <div class="letters" id="attempt-2">
+      <div id="attempt-2-letter-1" class="letter"></div>
+      <div id="attempt-2-letter-2" class="letter"></div>
+      <div id="attempt-2-letter-3" class="letter"></div>
+      <div id="attempt-2-letter-4" class="letter"></div>
+      <div id="attempt-2-letter-5" class="letter"></div>
+    </div>
+    <div class="letters" id="attempt-3">
+      <div id="attempt-3-letter-1" class="letter"></div>
+      <div id="attempt-3-letter-2" class="letter"></div>
+      <div id="attempt-3-letter-3" class="letter"></div>
+      <div id="attempt-3-letter-4" class="letter"></div>
+      <div id="attempt-3-letter-5" class="letter"></div>
+    </div>
+    <div class="letters" id="attempt-4">
+      <div id="attempt-4-letter-1" class="letter"></div>
+      <div id="attempt-4-letter-2" class="letter"></div>
+      <div id="attempt-4-letter-3" class="letter"></div>
+      <div id="attempt-4-letter-4" class="letter"></div>
+      <div id="attempt-4-letter-5" class="letter"></div>
+    </div>
+    <div class="letters" id="attempt-5">
+      <div id="attempt-5-letter-1" class="letter"></div>
+      <div id="attempt-5-letter-2" class="letter"></div>
+      <div id="attempt-5-letter-3" class="letter"></div>
+      <div id="attempt-5-letter-4" class="letter"></div>
+      <div id="attempt-5-letter-5" class="letter"></div>
+    </div>
+    <div class="letters" id="attempt-6">
+      <div id="attempt-6-letter-1" class="letter"></div>
+      <div id="attempt-6-letter-2" class="letter"></div>
+      <div id="attempt-6-letter-3" class="letter"></div>
+      <div id="attempt-6-letter-4" class="letter"></div>
+      <div id="attempt-6-letter-5" class="letter"></div>
+    </div>
+  </div>
+
+
+  <!--Keyboard-->
+  <div id="keyboard">
+    <div class="keyboard-row">
+      <div id="letter-q" onclick="enterLetter('q')">Q</div>
+      <div id="letter-w" onclick="enterLetter('w')">W</div>
+      <div id="letter-e" onclick="enterLetter('e')">E</div>
+      <div id="letter-r" onclick="enterLetter('r')">R</div>
+      <div id="letter-t" onclick="enterLetter('t')">T</div>
+      <div id="letter-y" onclick="enterLetter('y')">Y</div>
+      <div id="letter-u" onclick="enterLetter('u')">U</div>
+      <div id="letter-i" onclick="enterLetter('i')">I</div>
+      <div id="letter-o" onclick="enterLetter('o')">O</div>
+      <div id="letter-p" onclick="enterLetter('p')">P</div>
+    </div>
+    <div class="keyboard-row">
+      <div id="letter-a" onclick="enterLetter('a')">A</div>
+      <div id="letter-s" onclick="enterLetter('s')">S</div>
+      <div id="letter-d" onclick="enterLetter('d')">D</div>
+      <div id="letter-f" onclick="enterLetter('f')">F</div>
+      <div id="letter-g" onclick="enterLetter('g')">G</div>
+      <div id="letter-h" onclick="enterLetter('h')">H</div>
+      <div id="letter-j" onclick="enterLetter('j')">J</div>
+      <div id="letter-k" onclick="enterLetter('k')">K</div>
+      <div id="letter-l" onclick="enterLetter('l')">L</div>
+
+    </div>
+    <div class="keyboard-row">
+      <div id="submit" onclick="enter()"><span class="material-icons-round">check</span></div>
+      <div id="letter-z" onclick="enterLetter('z')">Z</div>
+      <div id="letter-x" onclick="enterLetter('x')">X</div>
+      <div id="letter-c" onclick="enterLetter('c')">C</div>
+      <div id="letter-v" onclick="enterLetter('v')">V</div>
+      <div id="letter-b" onclick="enterLetter('b')">B</div>
+      <div id="letter-n" onclick="enterLetter('n')">N</div>
+      <div id="letter-m" onclick="enterLetter('m')">M</div>
+      <div id="backspace" onclick="enterLetter('delete')"><span class="material-icons-round">backspace</span></div>
+
+    </div>
+  </div>
+
+</body>
+
+<script>
+
+
+
+
+//Generate Word
+var randomNumber = Math.floor(Math.random() * 2498);
+var word = words[randomNumber];
+var word = word.toUpperCase();
+var wordLetterArray = Array.from(word);
+//console.log(word);
+
+
+var correctLetters = 0;
+var tile = 0;
+var attempt = 1;
+var letterTile = 0;
+var guessLetterArray = [];
+var keyboard = "enabled";
+var containerHeight = 0;
+var letterHeight = 0;
+
+containerHeights();
+
+window.addEventListener('resize', function(event) {
+    containerHeights();
+}, true);
+
+
+function containerHeights(){
+  containerHeight = window.innerHeight;
+  containerHeight = containerHeight - 230;
+  if (containerHeight < 420){
+    document.getElementById("container").style.height = containerHeight+"px";
+  } else {
+    document.getElementById("container").style.height = "420px";
+  }
+  let letterContainer = document.querySelector('.letter');
+  letterHeight = (letterContainer).offsetHeight;
+  var letterElements = document.getElementsByClassName("letter");
+  for (i = 0; i < letterElements.length; i++){
+    letterElements[i].style.lineHeight = letterHeight+"px";
+  }
+}
+
+
+
+//Watch for keyboard input
+document.addEventListener("keydown", keyboardInput);
+
+
+
+//Enter or remove a letter into a letter tile
+function enterLetter(character){
+  var character = character.toUpperCase();
+  if (character != "DELETE"){
+    if (guessLetterArray.length < 5){
+      guessLetterArray.push(character);
+      letterTile = letterTile + 1;
+      document.getElementById("attempt-"+attempt+"-letter-"+letterTile).innerHTML = character;
+    }
+  } else {
+    if ((letterTile != 0) && (keyboard != "disabled")){
+    guessLetterArray.pop();
+    document.getElementById("attempt-"+attempt+"-letter-"+letterTile).innerHTML = "";
+     letterTile = letterTile - 1;
+    }
+  }
+}
+
+
+//Get letter or action from keyboard input
+function keyboardInput(character){
+  if (keyboard == "enabled"){
+    var charCode = character.keyCode;
+    if ((charCode >= 65) && (charCode <= 90)){
+      var charStr = String.fromCharCode(charCode);
+      enterLetter(charStr);
+    }
+    if (charCode == 13){
+      enter();
+    }
+    if (charCode == 8){
+      enterLetter("DELETE");
+    }
+  } else {
+
+  }
+}
+
+
+//Enter button clicked, or enter key clicked
+function enter(){
+  if (letterTile == 5){
+    disableKeyboard();
+    checkWord();
+  } else {
+    showAlert1();
+  }
+}
+
+
+//Disable keyboard
+function disableKeyboard(){
+ keyboard = "disabled";
+}
+//Enable keyboard
+function enableKeyboard(){
+ keyboard = "enabled";
+}
+
+
+//Check if the entered word is a real word or not
+function checkWord(){
+  var realWord = false;
+  var guessString = guessLetterArray.join("").toLowerCase();
+  fetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+guessString)
+    .then(response => response.json())
+    .then(data => {
+      if ((data.length > 0)){
+        realWord = true;
+        checkLetters();
+      }
+      else {
+        realWord = false;
+        showAlert2();
+        enableKeyboard();
+      }
+  });
+}
+
+
+function checkTile(){
+  var i = tile - 1;
+  if (word.includes(guessLetterArray[i])){
+    document.getElementById("attempt-"+attempt+"-letter-"+tile).classList.add("orange");
+    document.getElementById("letter-"+guessLetterArray[i].toLowerCase()).classList.add("orange");
+  } else {
+    document.getElementById("attempt-"+attempt+"-letter-"+tile).classList.add("grey");
+    document.getElementById("letter-"+guessLetterArray[i].toLowerCase()).classList.add("grey");
+  }
+  if (guessLetterArray[i] == wordLetterArray[i]){
+    document.getElementById("attempt-"+attempt+"-letter-"+tile).classList.remove("orange");
+    document.getElementById("letter-"+guessLetterArray[i].toLowerCase()).classList.remove("orange");
+    document.getElementById("attempt-"+attempt+"-letter-"+tile).classList.add("green");
+    document.getElementById("letter-"+guessLetterArray[i].toLowerCase()).classList.add("green");
+    correctLetters = correctLetters + 1;
+  }
+}
+
+
+//Check which letters are correct
+function checkLetters(){
+  correctLetters = 0;
+  tile = 0;
+  setTimeout(function(){tile = 1; checkTile();}, 0);
+  setTimeout(function(){tile = 2; checkTile();}, 300);
+  setTimeout(function(){tile = 3; checkTile();}, 600);
+  setTimeout(function(){tile = 4; checkTile();}, 900);
+  setTimeout(function(){tile = 5; checkTile();}, 1200);
+  setTimeout(function(){
+    if (correctLetters == 5){
+      winner();
+    } else  if ((correctLetters < 5) && (attempt == 6)){
+      gameOver();
+    } else {
+        //Resets
+        attempt = attempt + 1;
+        console.log (attempt);
+        letterTile = 0;
+        tile = 0;
+        guessLetterArray = [];
+        enableKeyboard();
+      }
+    }, 1500)
+
+  }
+
+
+
+function infoModal(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("info-modal").classList.remove("hide");
+}
+
+
+function gameOver(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("alert-lose").classList.remove("hide");
+  //Populate data
+  document.getElementById("correct-answer-was").innerHTML = word;
+
+}
+
+function winner(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("alert-win").classList.remove("hide");
+  //Populate data
+  document.getElementById("guess-attempts").innerHTML = attempt;
+  if (attempt == 1){
+    document.getElementById("attempt-plural").innerHTML = "guess";
+  } else {
+    document.getElementById("attempt-plural").innerHTML = "guesses";
+  }
+}
+
+function hideAlert() {
+  document.getElementById("alert-1").classList.add("hide");
+  document.getElementById("alert-2").classList.add("hide");
+}
+
+function showAlert1(){
+  document.getElementById("alert-1").classList.remove("hide");
+  setTimeout(hideAlert, 1500);
+}
+
+function showAlert2(){
+  document.getElementById("alert-2").classList.remove("hide");
+  setTimeout(hideAlert, 1500);
+}
+
+function restartGame(){
+  location.reload();
+}
+
+function backToGame(){
+  //Open overlay
+  document.getElementById("overlay").classList.add("hide");
+  //Display modal
+  document.getElementById("info-modal").classList.add("hide");
+}
+
+</script>
+
+</html>
