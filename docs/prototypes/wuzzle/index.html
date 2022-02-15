@@ -263,11 +263,13 @@ function keyboardInput(character){
 
 //Enter button clicked, or enter key clicked
 function enter(){
-  if (letterTile == 5){
-    disableKeyboard();
-    checkWord();
-  } else {
-    showAlert1();
+  if (keyboard == "enabled"){
+    if (letterTile == 5){
+      disableKeyboard();
+      checkWord();
+    } else {
+      showAlert1();
+    }
   }
 }
 
