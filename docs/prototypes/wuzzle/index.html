@@ -27,8 +27,11 @@
 
   <!--Header-->
   <div id="header">
+    <div class="info-link info-link-1" onclick="helpModal()">
+      <span class="material-icons-round">help</span>
+    </div>
     <h1>Wuzzle</h1>
-    <div class="info-link" onclick="infoModal()">
+    <div class="info-link info-link-2" onclick="infoModal()">
       <span class="material-icons-round">info</span>
     </div>
   </div>
@@ -56,9 +59,25 @@
     <button type="button" id="restartGame" class="cta" onclick="restartGame()">Play New Game</button>
   </div>
 
-  <div class="modal hide" id="info-modal">
+
+  <div class="modal-help hide" id="help-modal">
+    <div class="close-icon" onclick="backToGame()">
+      <span class="material-icons-round">close</span>
+    </div>
+    <h2>How to Play</h2>
+    <p>Guess the mystery word in six tries.</p>
+    <p>Each guess must be a valid 5 letter english word. Click the tick icon, or enter to submit your guess.</p>
+    <p>After each guess, the colour of the tiles will change to show how close your guess was to the word</p>
+    <p>A <strong class="green-example">green</strong> tile means you have the correct letter, in the correct position</p>
+    <p>An <strong class="orange-example">orange</strong>  tile means the letter appears in the word, but you have it in the wrong position</p>
+    <p>A <strong class="grey-example">grey</strong>  tile means the letter doesn't appear in the word</p>
+  </div>
+
+  <div class="modal hide modal-info" id="info-modal">
+    <div class="close-icon" onclick="backToGame()">
+      <span class="material-icons-round">close</span>
+    </div>
     <p>Wuzzle was inspired by <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">Wordle</a> and was built by <a href="https://justjo.github.io/">Joanne Walter</a> for educational purposes.</p>
-    <button type="button" id="back" class="cta" onclick="backToGame()">Back to Game</button>
   </div>
 
 
@@ -329,6 +348,12 @@ function checkLetters(){
 
   }
 
+function helpModal(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("help-modal").classList.remove("hide");
+}
 
 
 function infoModal(){
@@ -387,6 +412,7 @@ function backToGame(){
   document.getElementById("overlay").classList.add("hide");
   //Display modal
   document.getElementById("info-modal").classList.add("hide");
+  document.getElementById("help-modal").classList.add("hide");
 }
 
 </script>
