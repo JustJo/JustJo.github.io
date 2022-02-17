@@ -156,13 +156,13 @@
 
 //Generate Number
 var randomNumber = Math.floor(Math.random() * 99999) + 1;
-console.log(randomNumber);
+//console.log(randomNumber);
 randomNumber = String(randomNumber).padStart(5, '0');
-console.log(randomNumber);
+//console.log(randomNumber);
 
 //Convert Number into an Array
 var numberArray = Array.from(randomNumber);
-console.log(numberArray);
+//console.log(numberArray);
 
 var correctTiles = 0;
 var tile = 0;
@@ -226,7 +226,7 @@ function keyInput(key){
 function keyboardInput(key){
   if (keyboard == "enabled"){
     var charCode = key.keyCode;
-    console.log(charCode);
+    //console.log(charCode);
     if ((charCode >= 48) && (charCode <= 57)){
       var charStr = String.fromCharCode(charCode);
       keyInput(charStr);
@@ -282,7 +282,7 @@ function checkTiles(){
   } else {
       //Resets
       attempt = attempt + 1;
-      console.log (attempt);
+      //console.log (attempt);
       numberTile = 0;
       tile = 0;
       guessNumberArray = [];
@@ -296,8 +296,8 @@ function checkTiles(){
 //Check individual tile
 function checkTile(){
   var i = tile - 1
-  console.log("attempt "+attempt);
-  console.log("tile "+tile);
+  //console.log("attempt "+attempt);
+  //console.log("tile "+tile);
   if (randomNumber.includes(guessNumberArray[i])){
     document.getElementById("attempt-"+attempt+"-"+tile).classList.add("orange");
     document.getElementById("num-"+guessNumberArray[i]).classList.add("orange");
