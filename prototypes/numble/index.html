@@ -1,0 +1,381 @@
+<html>
+<head>
+  <title>Numble</title>
+  <meta name="description" content="Try and guess the word!"/>
+  <meta property="og:image" content="social-tile.png"/>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/resources/img/favicon.png">
+
+  <!--GA-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177368151-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-177368151-1');
+  </script>
+  <!--END GA-->
+</head>
+
+
+<body>
+
+  <!--Header-->
+  <div id="header">
+    <div class="header-link help" onclick="helpModal()">
+      <span class="material-icons-round">help</span>
+    </div>
+    <h1>Numble</h1>
+    <div class="header-link info" onclick="infoModal()">
+      <span class="material-icons-round">info</span>
+    </div>
+  </div>
+
+
+  <!--Alerts-->
+  <div class="alert hide" id="alert-1">Not enough numbers</div>
+
+
+  <!--Modals-->
+  <div id="overlay" class="hide"></div>
+
+  <div class="modal hide" id="alert-win">
+    <h2>You won with</h2>
+    <p class="guesses"><span id="guess-attempts"></span> <span id="attempt-plural"></span></strong></p>
+    <p class="byline">Don't be limited by one challenge a day! Play a new game with a new number to guess now!</p>
+    <button type="button" id="restartGame" class="cta" onclick="restartGame()">Play Again</button>
+  </div>
+
+  <div class="modal hide" id="alert-lose">
+    <h2>The number you were looking for was</h2>
+    <p id="correct-answer-was"></p>
+    <p class="byline">Don't be limited by one challenge a day! Play a new game with a new number to guess now!</p>
+    <button type="button" id="restartGame" class="cta" onclick="restartGame()">Play New Game</button>
+  </div>
+
+
+  <div class="modal-help hide" id="help-modal">
+    <div class="close-icon" onclick="backToGame()">
+      <span class="material-icons-round">close</span>
+    </div>
+    <h2>How to Play</h2>
+    <p>Guess the mystery number in six tries.</p>
+    <p>Each guess must consist of 5 digits. Click the tick icon, or enter to submit your guess.</p>
+    <p>After each guess, the colour of the tiles will change to show how close your guess was to the number.</p>
+    <p>A <strong class="green-example">green</strong> tile means you have the correct digit, in the correct position.</p>
+    <p>An <strong class="orange-example">orange</strong>  tile means the digit appears in the number, but you have it in the wrong position.</p>
+    <p>A <strong class="grey-example">grey</strong>  tile means the digit doesn't appear in the number.</p>
+  </div>
+
+  <div class="modal hide modal-info" id="info-modal">
+    <div class="close-icon" onclick="backToGame()">
+      <span class="material-icons-round">close</span>
+    </div>
+    <p>Numbles was inspired by <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">Wordle</a> and was built by <a href="https://justjo.github.io/">Joanne Walter</a> for educational purposes.</p>
+  </div>
+
+
+  <!--Game Board-->
+  <div id="container">
+    <div class="numbers" id="attempt-1">
+      <div id="attempt-1-1" class="tile"></div>
+      <div id="attempt-1-2" class="tile"></div>
+      <div id="attempt-1-3" class="tile"></div>
+      <div id="attempt-1-4" class="tile"></div>
+      <div id="attempt-1-5" class="tile"></div>
+    </div>
+    <div class="numbers" id="attempt-2">
+      <div id="attempt-2-1" class="tile"></div>
+      <div id="attempt-2-2" class="tile"></div>
+      <div id="attempt-2-3" class="tile"></div>
+      <div id="attempt-2-4" class="tile"></div>
+      <div id="attempt-2-5" class="tile"></div>
+    </div>
+    <div class="numbers" id="attempt-3">
+      <div id="attempt-3-1" class="tile"></div>
+      <div id="attempt-3-2" class="tile"></div>
+      <div id="attempt-3-3" class="tile"></div>
+      <div id="attempt-3-4" class="tile"></div>
+      <div id="attempt-3-5" class="tile"></div>
+    </div>
+    <div class="numbers" id="attempt-4">
+      <div id="attempt-4-1" class="tile"></div>
+      <div id="attempt-4-2" class="tile"></div>
+      <div id="attempt-4-3" class="tile"></div>
+      <div id="attempt-4-4" class="tile"></div>
+      <div id="attempt-4-5" class="tile"></div>
+    </div>
+    <div class="numbers" id="attempt-5">
+      <div id="attempt-5-1" class="tile"></div>
+      <div id="attempt-5-2" class="tile"></div>
+      <div id="attempt-5-3" class="tile"></div>
+      <div id="attempt-5-4" class="tile"></div>
+      <div id="attempt-5-5" class="tile"></div>
+    </div>
+    <div class="numbers" id="attempt-6">
+      <div id="attempt-6-1" class="tile"></div>
+      <div id="attempt-6-2" class="tile"></div>
+      <div id="attempt-6-3" class="tile"></div>
+      <div id="attempt-6-4" class="tile"></div>
+      <div id="attempt-6-5" class="tile"></div>
+    </div>
+  </div>
+
+
+  <!--Keyboard-->
+  <div id="keyboard">
+    <div class="keyboard-row">
+      <div id="num-0" onclick="keyInput('0')">0</div>
+      <div id="num-1" onclick="keyInput('1')">1</div>
+      <div id="num-2" onclick="keyInput('2')">2</div>
+      <div id="num-3" onclick="keyInput('3')">3</div>
+      <div id="num-4" onclick="keyInput('4')">4</div>
+      <div id="backspace" onclick="keyInput('delete')"><span class="material-icons-round">backspace</span></div>
+    </div>
+    <div class="keyboard-row">
+      <div id="num-5" onclick="keyInput('5')">5</div>
+      <div id="num-6" onclick="keyInput('6')">6</div>
+      <div id="num-7" onclick="keyInput('7')">7</div>
+      <div id="num-8" onclick="keyInput('8')">8</div>
+      <div id="num-9" onclick="keyInput('9')">9</div>
+      <div id="submit" onclick="enter()"><span class="material-icons-round">check</span></div>
+    </div>
+    </div>
+  </div>
+
+</body>
+
+<script>
+
+
+
+
+//Generate Number
+var randomNumber = Math.floor(Math.random() * 99999) + 1;
+console.log(randomNumber);
+randomNumber = String(randomNumber).padStart(5, '0');
+console.log(randomNumber);
+
+//Convert Number into an Array
+var numberArray = Array.from(randomNumber);
+console.log(numberArray);
+
+var correctTiles = 0;
+var tile = 0;
+var attempt = 1;
+var numberTile = 0;
+var guessNumberArray = [];
+var keyboard = "enabled";
+var tileHeight = 0;
+var containerHeight = 0;
+var numberHeight = 0;
+
+containerHeights();
+
+window.addEventListener('resize', function(event) {
+    containerHeights();
+}, true);
+
+function containerHeights(){
+  containerHeight = window.innerHeight;
+  containerHeight = containerHeight - 175;
+  if (containerHeight < 420){
+    document.getElementById("container").style.height = containerHeight+"px";
+  } else {
+    document.getElementById("container").style.height = "420px";
+  }
+  let numberContainer = document.querySelector('.tile');
+  numberHeight = (numberContainer).offsetHeight;
+  var numberElements = document.getElementsByClassName("tile");
+  for (i = 0; i < numberElements.length; i++){
+    numberElements[i].style.lineHeight = numberHeight+"px";
+  }
+}
+
+
+
+//Watch for keyboard input
+document.addEventListener("keydown", keyboardInput);
+
+
+
+//Enter or remove a number into a tile
+function keyInput(key){
+  if (key != "delete"){
+    var number = key;
+    if (guessNumberArray.length < 5){
+      guessNumberArray.push(number);
+      numberTile = numberTile + 1;
+      document.getElementById("attempt-"+attempt+"-"+numberTile).innerHTML = number;
+    }
+  } else {
+  if ((numberTile != 0) && (keyboard != "disabled")){
+    guessNumberArray.pop();
+    document.getElementById("attempt-"+attempt+"-"+numberTile).innerHTML = "";
+    numberTile = numberTile - 1;
+    }
+  }
+}
+
+
+//Get number or action from keyboard input
+function keyboardInput(key){
+  if (keyboard == "enabled"){
+    var charCode = key.keyCode;
+    console.log(charCode);
+    if ((charCode >= 48) && (charCode <= 57)){
+      var charStr = String.fromCharCode(charCode);
+      keyInput(charStr);
+    }
+    if (charCode == 13){
+      enter();
+    }
+    if (charCode == 8){
+      keyInput("delete");
+    }
+  }
+}
+
+
+//Enter button clicked, or enter key clicked
+function enter(){
+  if (keyboard == "enabled"){
+    if (numberTile == 5){
+      disableKeyboard();
+      checkTiles();
+    } else {
+      showAlert1();
+    }
+  }
+}
+
+
+//Disable keyboard
+function disableKeyboard(){
+ keyboard = "disabled";
+}
+//Enable keyboard
+function enableKeyboard(){
+ keyboard = "enabled";
+}
+
+
+
+//Check which numbers are correct
+function checkTiles(){
+  correctNumbers = 0;
+  tile = 0;
+  setTimeout(function(){tile = 1; checkTile();}, 0);
+  setTimeout(function(){tile = 2; checkTile();}, 300);
+  setTimeout(function(){tile = 3; checkTile();}, 600);
+  setTimeout(function(){tile = 4; checkTile();}, 900);
+  setTimeout(function(){tile = 5; checkTile();}, 1200);
+  setTimeout(function(){
+  if (correctNumbers == 5){
+    winner();
+  } else  if ((correctNumbers < 5) && (attempt == 6)){
+    gameOver();
+  } else {
+      //Resets
+      attempt = attempt + 1;
+      console.log (attempt);
+      numberTile = 0;
+      tile = 0;
+      guessNumberArray = [];
+      enableKeyboard();
+    }
+  }, 1500)
+
+}
+
+
+//Check individual tile
+function checkTile(){
+  var i = tile - 1
+  console.log("attempt "+attempt);
+  console.log("tile "+tile);
+  if (randomNumber.includes(guessNumberArray[i])){
+    document.getElementById("attempt-"+attempt+"-"+tile).classList.add("orange");
+    document.getElementById("num-"+guessNumberArray[i]).classList.add("orange");
+  } else {
+    document.getElementById("attempt-"+attempt+"-"+tile).classList.add("grey");
+    document.getElementById("num-"+guessNumberArray[i]).classList.add("grey");
+  }
+  if (guessNumberArray[i] == numberArray[i]){
+    document.getElementById("attempt-"+attempt+"-"+tile).classList.remove("orange");
+    document.getElementById("num-"+guessNumberArray[i]).classList.remove("orange");
+    document.getElementById("attempt-"+attempt+"-"+tile).classList.add("green");
+    document.getElementById("num-"+guessNumberArray[i]).classList.add("green");
+    correctNumbers = correctNumbers + 1;
+  }
+}
+
+
+function helpModal(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("help-modal").classList.remove("hide");
+}
+
+
+function infoModal(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("info-modal").classList.remove("hide");
+}
+
+
+function gameOver(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("alert-lose").classList.remove("hide");
+  //Populate data
+  document.getElementById("correct-answer-was").innerHTML = randomNumber;
+
+}
+
+function winner(){
+  //Open overlay
+  document.getElementById("overlay").classList.remove("hide");
+  //Display modal
+  document.getElementById("alert-win").classList.remove("hide");
+  //Populate data
+  document.getElementById("guess-attempts").innerHTML = attempt;
+  if (attempt == 1){
+    document.getElementById("attempt-plural").innerHTML = "guess";
+  } else {
+    document.getElementById("attempt-plural").innerHTML = "guesses";
+  }
+}
+
+function hideAlert() {
+  document.getElementById("alert-1").classList.add("hide");
+}
+
+function showAlert1(){
+  document.getElementById("alert-1").classList.remove("hide");
+  setTimeout(hideAlert, 1500);
+}
+
+function restartGame(){
+  location.reload();
+}
+
+function backToGame(){
+  //Open overlay
+  document.getElementById("overlay").classList.add("hide");
+  //Display modal
+  document.getElementById("info-modal").classList.add("hide");
+  document.getElementById("help-modal").classList.add("hide");
+}
+
+</script>
+
+</html>
