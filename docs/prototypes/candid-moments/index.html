@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About Jojo</title>
+  <meta name="description" content="Since 2008 I’ve worked alongside agencies and startups crafting customer-centric experiences as a Web Designer/ Developer and Product Designer"/>
+  <meta property="og:image" content="/resources/img/social.png"/>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+  <script src="suggestions.js"></script>
+
+
+</head>
+<body>
+  <div class="parent">
+  <div class="child" id="panel-1">
+    <div  class="inner">
+
+  </div></div>
+  <div class="child" id="panel-2" >
+    <div class="inner">
+      <img src="assets/logo.svg" class="logo">
+      <h1>Candid Moments</h1>
+       <p class="byline">Candid Moments helps busy parents capture everyday moments of their partner with their children with simple photo prompts.</p>
+    <p class="suggestion" id="correct-answer-was"></p>
+    <a href="#" class="primary-button">Generate another prompt</a>
+    <p class="reminder">Need help remembering to capture these candid moments? Set up a daily or weekly reminder.</p>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+
+</body>
+<script>
+//Generate Word
+var randomNumber = Math.floor(Math.random() * 10);
+console.log(randomNumber);
+
+//var suggestion = suggestions[randomNumber];
+var suggestion = suggestions[0];
+
+console.log(suggestion);
+document.getElementById("correct-answer-was").innerHTML = suggestion;
+</script>

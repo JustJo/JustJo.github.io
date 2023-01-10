@@ -1,0 +1,104 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+
+}
+*{
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+body {
+	color: #000;
+	-webkit-font-smoothing:subpixel-antialiased;
+	font-family: 'Roboto', sans-serif;
+	background: #fff;
+  touch-action: pan-x pan-y;
+
+}
+
+
+.parent {
+  display: flex;
+  height: 100vh; /* Or whatever */
+	align-items: center;
+ justify-content: center;
+	background: url("assets/feature-3.png") no-repeat top left;
+background-size: contain
+}
+
+.child {
+  width: 50%;  /* Or whatever */
+  margin: auto;  /* Magic! */
+	vertical-align: middle;
+	text-align: center;
+}
+
+
+#panel-2 {
+	text-align: center;
+}
+
+.inner {
+	padding: 100px;
+	max-width: 600px;
+}
+.logo {
+	height: 50px;
+	width: 50px;
+	margin-bottom: 20px
+}
+
+
+h1 {
+	font-family: 'Calistoga', cursive;
+	font-size: 34px;
+	line-height: 34px;
+	padding-bottom: 15px;
+}
+
+p.byline {
+	font-size: 16px;
+	line-height: 24px;
+	padding-bottom: 0px;
+	color: #555;
+}
+
+p.suggestion {
+	font-size: 24px;
+	line-height: 32px;
+	font-weight: 400;
+	padding: 20px 0;
+}
+
+p.reminder {
+	font-size: 14px;
+	line-height: 18px;
+	color: #555;
+	padding-top: 20px;
+}
+
+a.primary-button {
+	background: #B0C6FF;
+	color: #002D6E;
+	border-radius: 50px;
+	display: inline-block;
+	padding: 10px 20px;
+	text-decoration: none;
+}
