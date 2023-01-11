@@ -57,7 +57,7 @@ background-size: contain
 
 .inner {
 	padding: 100px;
-	max-width: 600px;
+	max-width: 650px;
 }
 .logo {
 	height: 50px;
@@ -101,4 +101,47 @@ a.primary-button {
 	display: inline-block;
 	padding: 10px 20px;
 	text-decoration: none;
+}
+
+
+button#reminder {
+	background: #fff;
+	color: #002D6E;
+	border-radius: 50px;
+	display: inline-block;
+	padding: 10px 20px;
+	text-decoration: none;
+	border: 1px solid #B0C6FF;
+	font-size: 14px;
+}
+
+button#default-button {
+	display: block;
+	margin: 0 auto;
+}
+
+.overlay {
+	display: flex;
+  height: 100vh; /* Or whatever */
+	align-items: center;
+ justify-content: center;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		background: rgba(0,0,0,0.5);
+}
+.modal {
+	padding: 20px;
+	background: #fff;
+	margin: auto;  /* Magic! */
+	vertical-align: middle;
+}
+
+
+#modal h3 {
+	font-size: 20px;
+}
+
+#modal input {
+	float: left;
 }

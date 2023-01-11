@@ -2,29 +2,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>About Jojo</title>
-  <meta name="description" content="Since 2008 I’ve worked alongside agencies and startups crafting customer-centric experiences as a Web Designer/ Developer and Product Designer"/>
+  <title>TO COME</title>
+  <meta name="description" content="TO COME"/>
   <meta property="og:image" content="/resources/img/social.png"/>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
-
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,400i,500,700,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Calistoga&display=swap" rel="stylesheet">
+
   <script src="suggestions.js"></script>
-
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/add-to-calendar-button@1/assets/css/atcb.min.css">
 </head>
 <body>
+
+<div class="overlay">
+  <div class="modal">
+
+  <h3>What days would you like to be reminded</h3>
+
+  <input type="checkbox" class="day" id="monday" name="monday" value="MO"><label for="monday">Monday</label><br>
+  <input type="checkbox" class="day" id="tuesday" name="tuesday" value="TU"><label for="tuesday">Tuesday</label><br>
+  <input type="checkbox" class="day" id="wednesday" name="wednesday" value="WE"><label for="wednesday">Wednsday</label><br>
+  <input type="checkbox" class="day" id="thursday" name="thursday" value="TH"><label for="thursday">Thursday</label><br>
+  <input type="checkbox" class="day" id="friday" name="friday" value="FR"><label for="friday">Firday</label><br>
+  <input type="checkbox" class="day" id="saturday" name="saturday" value="SA"><label for="saturday">Saturday</label><br>
+  <input type="checkbox" class="day" id="sunday" name="sunday" value="SU"><label for="sunday">Sunday</label><br>
+
+  <h3>What time should the reminder be set for?</h3>
+  <input type="time" id="time" name="time">
+
+   <button onclick="createarray()" id="reminder">Click me</button>
+
+
+</div>
+</div>
+
+
+
+
+
+
   <div class="parent">
   <div class="child" id="panel-1">
     <div  class="inner">
@@ -34,9 +57,54 @@
     <div class="inner">
       <img src="assets/logo.svg" class="logo">
       <h1>Candid Moments</h1>
-       <p class="byline">Candid Moments helps busy parents capture everyday moments of their partner with their children with simple photo prompts.</p>
+       <p class="byline">Candid Moments helps busy parents capture everyday moments of their partner and baby with simple photo prompts.</p>
     <p class="suggestion" id="correct-answer-was"></p>
-    <a href="#" class="primary-button">Generate another prompt</a>
+    <a href="#" class="primary-button prompt">Generate another prompt</a>
+
+    <p class="reminder"><a id="reminder">Set a reminder</a> so you don't forget to capture these precious candid moments!</p>
+
+
+
+
+
+
+
+          <script type="application/javascript">
+
+          var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          var days = ["MO","TU"];
+          days = days.toString();
+          time = "08:00";
+
+            var config = {
+              "name":"Don't forget to capture a candid moment between your partner and child today!",
+              "description":"Check out the maybe easiest way to include add to calendar buttons to your website at:<br>→ [url]https://justjo.github.io/prototypes/candid-moments/index[/url]",
+              "startDate":"today+1",
+              "endDate":"today+1",
+              "startTime":time,
+              "endTime":"08:15",
+              "location":"https://justjo.github.io/prototypes/candid-moments/index",
+              "options":[
+                "Apple|Add to my apple calendar",
+                "Google|Add to my google calendar",
+              ],
+              "timeZone":timezone,
+              "recurrence":"RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY="+days+"",
+  "iCalFileName":"Reminder-Event"
+
+            };
+            var button = document.getElementById('reminder');
+              button.addEventListener('click', () => atcb_action(config, button));
+
+
+
+
+
+
+          </script>
+
+
+</div>
 
 
   </div>
@@ -46,6 +114,7 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/add-to-calendar-button@1" async defer></script>
 
 
 </body>
@@ -54,14 +123,22 @@
 var randomNumber = Math.floor(Math.random() * 10);
 console.log(randomNumber);
 
-//var suggestion = suggestions[randomNumber];
-var suggestion = suggestions[0];
+var suggestion = suggestions[randomNumber];
 
 console.log(suggestion);
 document.getElementById("correct-answer-was").innerHTML = suggestion;
 
 
+$(".prompt").click(function() {
+  var randomNumber = Math.floor(Math.random() * 10);
+  console.log(randomNumber);
 
+  var suggestion = suggestions[randomNumber];
+
+  console.log(suggestion);
+  document.getElementById("correct-answer-was").innerHTML = suggestion;
+
+});
 
 
 
