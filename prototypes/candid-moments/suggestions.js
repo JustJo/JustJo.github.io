@@ -10,4 +10,4 @@ var suggestions = [
 "Take a photo of your partner feeding the baby",
 "Take a photo of your partner singing to the baby",
 "Take a photo of your partner giving the baby a massage",
-"Take a photo of your partner "];
+"Take a photo of your partner"];
