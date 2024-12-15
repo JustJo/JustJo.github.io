@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>What the Fork is for Dinner?</title>
+  <meta name="description" content="Stuck on what to have for dinner? 'What the Fork is for Dinner' serves up quick and easy meal ideas to take the guesswork out of mealtime!"/>
+  <meta property="og:image" content="images/social.png"/>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <script src="suggestions.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=close,menu" />
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!--ALL SUGGESTIONS PANEL-->
+  <div id="all-suggestions">
+    <span id="close-all-suggestions" class="material-symbols-rounded" onclick="closeAllSuggestions();">close</span>
+    <div id="categories">
+      <!-- Categories will be dynamically loaded here -->
+    </div>
+</div>
+
+<!--HEADER-->
+<div id="section-header">
+  <span id="menu" class="material-symbols-rounded" onclick="openMenu();">menu</span>
+</div>
+
+<!--MAIN SECTION-->
+<div id="section-main">
+  <div id="logo"><img src="images/logo.svg"/></div>
+  <div id="suggestion" class="display-none">
+    <h2 id="suggestion-title"></h2>
+    <h3 id="suggestion-byline"></h3>
+    <a href="" id="suggestion-link" target="_blank"></a>
+  </div>
+</div>
+
+<!--BASE SECTION-->
+<div id="section-base">
+  <button class="generate" onclick="generateSuggestion();">Fork Yeah! What’s for Dinner?</button>
+</div>
+
+<!--MENU PANEL-->
+<div id="section-menu">
+  <span id="close-menu" class="material-symbols-rounded" onclick="closeMenu();">close</span> -->
+  <div class="container">
+    <button class="options" id="standardOptions"><span>Easy Hour Eats</span>Tasty meals ready in under an hour</button>
+    <button class="options" id="takeawayOptions"><span>Grab & Go</span>For when you want to bring dinner home</button>
+    <button class="options" id="dineoutOptions"><span>Table for Two</span>Enjoy a night out with great food</button>
+    <button class="options" id="slowandsavouryOptions"><span>Slow & Savory</span>Perfect for when you’ve got time to spare</button>
+    <button class="options" id="viewAll"><span>Feast Your Eyes</span>See all your delicious dining options in one place</button>
+  </div>
+</div>
+
+</body>
+
+
+<script>
+
+  //Set focus array to default to standard options
+  var focusArray=standardOptions;
+
+  //Script for displaying all the suggestions in the all suggestions panel
+  const categories = {
+      "Standard Options": standardOptions,
+      "Takeaway Options": takeawayOptions,
+      "Dine-Out Options": dineoutOptions,
+      "Slow and Savoury Options": slowandsavouryOptions,
+  };
+
+  const categoriesContainer = document.getElementById('categories');
+
+  for (const [categoryName, options] of Object.entries(categories)) {
+      // Create a category section
+      const categoryDiv = document.createElement('div');
+      categoryDiv.classList.add('category');
+
+      // Add a title
+      const heading = document.createElement('h2');
+      heading.textContent = categoryName;
+      categoryDiv.appendChild(heading);
+
+      // Add a list
+      const ul = document.createElement('ul');
+      options.forEach(option => {
+          const [name, description, link] = option;
+          const li = document.createElement('li');
+          li.innerHTML = link
+              ? `<a href="${link}" target="_blank">${name}</a> ${description ? `<span>${description}</span>` : ""}`
+              : `${name} ${description ? `<span>${description}</span>` : ""}`;
+          ul.appendChild(li);
+      });
+
+      categoryDiv.appendChild(ul);
+      categoriesContainer.appendChild(categoryDiv);
+  }
+  //End script for displaying all the suggestions in the all suggestions panel
+
+  //Open all suggestions panel
+  function openAllSuggestions(){
+    document.getElementById("all-suggestions").classList.add("all-suggestions-opened");
+  }
+  //Close all suggestions panel
+  function closeAllSuggestions(){
+    document.getElementById("all-suggestions").classList.remove("all-suggestions-opened");
+  }
+
+  //Open Menu
+  function openMenu(){
+    document.getElementById("section-menu").classList.add("section-menu-opened");
+  }
+  //Close Menu
+  function closeMenu(){
+    document.getElementById("section-menu").classList.remove("section-menu-opened");
+  }
+
+  //From menu, on view all click, open all suggestions
+  document.getElementById("viewAll").addEventListener("click", function () {
+      openAllSuggestions();
+  });
+
+  //When standard options is selected from the menu, generate suggestions based on the standard options array
+  document.getElementById("standardOptions").addEventListener("click", function () {
+    focusArray=standardOptions;
+    closeMenu();
+    generateSuggestion();
+  });
+
+    //When takeaway options is selected from the menu, generate suggestions based on the takeaway options array
+  document.getElementById("takeawayOptions").addEventListener("click", function () {
+    focusArray=takeawayOptions;
+    closeMenu();
+    generateSuggestion();
+  });
+
+  //When dine out options is selected from the menu, generate suggestions based on the dine out options array
+  document.getElementById("dineoutOptions").addEventListener("click", function () {
+    focusArray=dineoutOptions;
+    closeMenu();
+    generateSuggestion();
+  });
+
+  //When slow and steady options is selected from the menu, generate suggestions based on the slow and steady options array
+  document.getElementById("slowandsavouryOptions").addEventListener("click", function () {
+    focusArray=slowandsavouryOptions;
+    closeMenu();
+    generateSuggestion();
+  });
+
+
+  //Function for generating the suggestions
+  function generateSuggestion() {
+    // Get number of suggestions
+    // Generate a random number between 0 and arrayLength
+      var randomNumber = Math.floor(Math.random() * focusArray.length);
+      var suggestion = focusArray[randomNumber][0];
+      var byline = focusArray[randomNumber][1];
+      var link = focusArray[randomNumber][2];
+
+      //Hide logo div
+      document.getElementById("logo").classList.add("display-none");
+
+      //Display suggestion div
+      document.getElementById("suggestion").classList.remove("display-none");
+
+      //Display the suggestion
+      document.getElementById("suggestion-title").innerHTML = suggestion;
+
+      //If byline in array is not empty
+      if(byline !== ""){
+        document.getElementById("suggestion-byline").style.display = "block";
+        document.getElementById("suggestion-byline").innerHTML = byline;
+      } else {
+        document.getElementById("suggestion-byline").style.display = "none";
+      }
+
+      //If link in array is not empty
+      if(link !== ""){
+        document.getElementById("suggestion-link").style.display = "block";
+        document.getElementById("suggestion-link").href = link;
+        if (focusArray == standardOptions ){
+          document.getElementById("suggestion-link").innerHTML = "View recipe";
+        }
+        if ((focusArray == dineoutOptions) ||  (focusArray == takeawayOptions)){
+          document.getElementById("suggestion-link").innerHTML = "Venue details";
+        }
+    } else {
+      document.getElementById("suggestion-link").style.display = "none";
+    }
+  };
+  //End function for generating the suggestions
+
+</script>
