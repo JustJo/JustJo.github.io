@@ -47,10 +47,10 @@ var dineoutOptions = [
 ];
 
 var slowandsavouryOptions = [
-  ["Roast lamb", "with roast vegetables", 6],
-  ["Roast chicken", "with roast vegetables", 6],
-  ["Roast pork", "with roast vegetables", 6],
-  ["Corned Beef", "with roast vegetables", 6],
+  ["Roast lamb", "with roast vegetables", ""],
+  ["Roast chicken", "with roast vegetables", ""],
+  ["Roast pork", "with roast vegetables", ""],
+  ["Corned Beef", "with roast vegetables", ""],
   ["Chilli Con Carne","Women's Weekly Slow Cooker, page 25", ""],
   ["Simple Beef & Vegetable Casserole","Women's Weekly Slow Cooker, page 30", ""],
   ["Massaman Beef Curry","Women's Weekly Slow Cooker, page 57", ""],
